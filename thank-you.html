@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Thanks — FlowCraft Systems</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/base.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Inter:wght@400;600&display=swap" />
+
+  <!-- Google tag (gtag.js) — fire generate_lead conversion -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W8BTM9N3JX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W8BTM9N3JX');
+    // Conversion event — fires once per thank-you page load
+    gtag('event', 'generate_lead', {
+      event_category: 'contact',
+      event_label: 'zoho_web_to_lead'
+    });
+  </script>
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 40px 24px;
+      background: var(--bg);
+    }
+    .ty-inner { max-width: 520px; }
+    .ty-mark {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+      border-radius: 16px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 28px;
+      box-shadow: 0 0 48px rgba(139,92,246,0.35);
+    }
+    .ty-mark svg { width: 28px; height: 28px; color: #fff; }
+    h1 { font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+    h1 em { background: linear-gradient(115deg, var(--primary), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    p { color: var(--text-soft); font-size: 1.05rem; margin-bottom: 32px; }
+    .ty-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; font-weight: 600; color: var(--text-soft);
+      border: 1px solid var(--border-bright);
+      padding: 10px 20px; border-radius: var(--r);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .ty-back:hover { color: var(--text); border-color: var(--primary); }
+  </style>
+</head>
+<body>
+  <div class="ty-inner">
+    <div class="ty-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <h1>Message <em>received</em>.</h1>
+    <p>We reply to every inquiry within one business day. We'll be in touch shortly.</p>
+    <a href="/" class="ty-back">← Back to FlowCraft Systems</a>
+  </div>
+</body>
+</html>

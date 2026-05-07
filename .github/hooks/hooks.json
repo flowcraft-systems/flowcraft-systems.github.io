@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "bash .github/hooks/pre-edit-sanitizer.sh",
+        "osx": "bash .github/hooks/pre-edit-sanitizer.sh",
+        "linux": "bash .github/hooks/pre-edit-sanitizer.sh",
+        "windows": "bash .github/hooks/pre-edit-sanitizer.sh",
+        "timeout": 15,
+        "env": {}
+      }
+    ],
+    "sessionStart": [],
+    "sessionEnd": [
+      {
+        "type": "command",
+        "bash": "flowcraft observe 2>/dev/null || true",
+        "powershell": "try { flowcraft observe } catch {}",
+        "timeoutSec": 60
+      }
+    ]
+  }
+}

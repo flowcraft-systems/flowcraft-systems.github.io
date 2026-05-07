@@ -1,0 +1,48 @@
+/* ─── Keyframes ─────────────────────────────────────────────────────────── */
+@keyframes blink   { 0%, 100% { opacity: 1 } 50% { opacity: 0.3 } }
+@keyframes pulse   { 0%, 100% { transform: scale(1); opacity: 1 } 50% { transform: scale(1.06); opacity: 0.85 } }
+@keyframes float   { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+@keyframes drift   { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
+@keyframes spin    { to { transform: rotate(360deg) } }
+@keyframes dash    { to { stroke-dashoffset: 0 } }
+@keyframes march   { to { stroke-dashoffset: -60 } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(24px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes glow    { 0%, 100% { filter: drop-shadow(0 0 6px rgba(139,92,246,0.5)) } 50% { filter: drop-shadow(0 0 20px rgba(34,211,238,0.6)) } }
+
+/* ─── Reveal-on-scroll ──────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.reveal.in-view { opacity: 1; transform: none; }
+.reveal[data-delay="1"] { transition-delay: 0.1s; }
+.reveal[data-delay="2"] { transition-delay: 0.2s; }
+.reveal[data-delay="3"] { transition-delay: 0.3s; }
+.reveal[data-delay="4"] { transition-delay: 0.4s; }
+
+/* ─── Decorative motion utilities ───────────────────────────────────────── */
+.dot-pulse { animation: blink 2.2s ease-in-out infinite; }
+.float     { animation: float 6s ease-in-out infinite; }
+.spin-slow { animation: spin 24s linear infinite; }
+.glow      { animation: glow 4.5s ease-in-out infinite; }
+
+.gradient-drift {
+  background-size: 200% 200%;
+  animation: drift 14s ease-in-out infinite;
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+
+  /* Hide canvas-driven hero animations; the static gradient backdrop remains */
+  #flow-field-canvas,
+  #constellation-canvas { display: none !important; }
+}

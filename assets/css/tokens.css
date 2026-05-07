@@ -1,0 +1,50 @@
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  /* Color — surfaces */
+  --bg:           #06060d;
+  --surface-1:   #0d0d18;
+  --surface-2:   #15152a;
+  --surface-3:   #1d1d36;
+  --border:      #1f1f3a;
+  --border-bright: #2e2e52;
+
+  /* Color — brand */
+  --primary:        #8b5cf6;
+  --primary-soft:   #a78bfa;
+  --primary-dim:    rgba(139, 92, 246, 0.12);
+  --primary-border: rgba(139, 92, 246, 0.3);
+  --primary-glow:   0 0 56px rgba(139, 92, 246, 0.28);
+
+  --cyan:    #22d3ee;
+  --green:   #10b981;
+  --amber:   #f59e0b;
+  --red:     #ef4444;
+
+  /* Color — text */
+  --text:        #ecedf6;
+  --text-soft:   #9ea0c0;
+  --text-muted:  #5b5d80;
+
+  /* Type */
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Shape */
+  --r:    10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+
+  /* Layout */
+  --container: 1180px;
+  --space-section: clamp(80px, 12vw, 140px);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root { scroll-behavior: smooth; }
+}

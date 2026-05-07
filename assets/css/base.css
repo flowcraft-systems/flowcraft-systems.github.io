@@ -1,0 +1,127 @@
+/* ─── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+img, svg, video, canvas { max-width: 100%; display: block; }
+button, input, textarea { font: inherit; color: inherit; }
+ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
+
+/* ─── Base typography ───────────────────────────────────────────────────── */
+html { font-size: 16px; }
+body {
+  font-family: var(--sans);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle ambient backdrop on every page */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 18% -5%, rgba(139,92,246,0.12), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 95% 20%, rgba(34,211,238,0.08), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Faint grid texture */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+main, header, footer, section { position: relative; z-index: 1; }
+
+p { color: var(--text-soft); }
+
+h1, h2, h3, h4 { font-family: var(--serif); color: #f4f5fb; line-height: 1.12; letter-spacing: -0.02em; font-weight: 700; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); }
+h2 { font-size: clamp(2rem, 3.6vw, 2.9rem); }
+h3 { font-size: clamp(1.4rem, 2vw, 1.8rem); }
+h4 { font-size: 1.05rem; font-family: var(--sans); font-weight: 600; }
+
+em.grad,
+h1 em,
+h2 em,
+.gradient {
+  font-style: italic;
+  background: linear-gradient(115deg, var(--primary) 0%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+code, pre, .mono { font-family: var(--mono); font-size: 0.85em; }
+
+/* ─── Layout primitives ─────────────────────────────────────────────────── */
+.container { max-width: var(--container); margin: 0 auto; padding: 0 28px; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--primary-soft);
+}
+.eyebrow::before {
+  content: ''; width: 22px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--primary));
+}
+
+.section-head { max-width: 720px; margin: 0 auto var(--space-section) auto; text-align: center; padding-bottom: 0; margin-bottom: clamp(48px, 6vw, 72px); }
+.section-head h2 { margin-top: 12px; }
+.section-head p { margin-top: 18px; font-size: 1.05rem; max-width: 56ch; margin-left: auto; margin-right: auto; }
+
+/* ─── Buttons ───────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--sans); font-weight: 600; font-size: 0.95rem;
+  padding: 13px 24px;
+  border: 1px solid transparent;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: transform 0.18s var(--ease-out), background 0.18s, border-color 0.18s, box-shadow 0.18s;
+  white-space: nowrap;
+}
+.btn-lg { padding: 15px 30px; font-size: 1rem; }
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: var(--primary-glow);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 72px rgba(139,92,246,0.4); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-bright);
+}
+.btn-ghost:hover { border-color: var(--primary); background: var(--primary-dim); transform: translateY(-1px); }
+
+/* ─── Skip link / a11y ──────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute; top: -100px; left: 12px;
+  background: var(--primary); color: #fff;
+  padding: 10px 16px; border-radius: var(--r);
+  z-index: 1000; font-weight: 600;
+}
+.skip-link:focus { top: 12px; }
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}

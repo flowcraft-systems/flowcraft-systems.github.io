@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#06060d" />
+
+  <title>FlowCraft Systems — The Operating System for AI-Native Engineering</title>
+  <meta name="description" content="FlowCraft Systems builds the operating system for AI-native engineering: software products and an operating model that turn AI from a copilot into a force multiplier. Makers of FlowCraft Engage and FlowCraft Tempo." />
+
+  <link rel="canonical" href="https://flowcraft.systems/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="FlowCraft Systems — The Operating System for AI-Native Engineering" />
+  <meta property="og:description" content="Software products and an operating model that turn AI from a copilot into a force multiplier. Makers of FlowCraft Engage and FlowCraft Tempo." />
+  <meta property="og:url" content="https://flowcraft.systems/" />
+  <meta property="og:image" content="https://flowcraft.systems/favicon.svg" />
+  <meta property="og:site_name" content="FlowCraft Systems" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FlowCraft Systems — The Operating System for AI-Native Engineering" />
+  <meta name="twitter:description" content="Software products and an operating model that turn AI from a copilot into a force multiplier." />
+  <meta name="twitter:image" content="https://flowcraft.systems/favicon.svg" />
+
+  <!-- JSON-LD: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "FlowCraft Systems",
+    "url": "https://flowcraft.systems",
+    "logo": "https://flowcraft.systems/favicon.svg",
+    "description": "The operating system for AI-native engineering. Software products and operating model that turn AI from a copilot into a force multiplier.",
+    "subOrganization": [
+      { "@type": "SoftwareApplication", "name": "FlowCraft Engage", "url": "https://engage.flowcraft.systems", "applicationCategory": "BusinessApplication" },
+      { "@type": "SoftwareApplication", "name": "FlowCraft Tempo",  "url": "https://tempo.flowcraft.systems",  "applicationCategory": "BusinessApplication" }
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/base.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css" />
+  <link rel="stylesheet" href="/assets/css/sections.css" />
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- ═══════════ NAV ═══════════ -->
+  <header class="nav" role="banner">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand" aria-label="FlowCraft Systems home">
+        <span class="nav-mark" aria-hidden="true"></span>
+        <span class="nav-name">FlowCraft<em>Systems</em></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#vision">Vision</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#products">Products</a>
+        <a href="#loop">The Loop</a>
+        <a href="#contact" class="nav-cta">Talk to us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true">
+        <canvas id="flow-field-canvas"></canvas>
+        <canvas id="constellation-canvas"></canvas>
+      </div>
+
+      <div class="container hero-inner">
+        <div class="hero-badge">
+          <span class="dot" aria-hidden="true"></span>
+          <span>FlowCraft Systems</span>
+        </div>
+
+        <h1 id="hero-title">
+          The <em>Operating&nbsp;System</em><br />
+          for AI-Native Engineering.
+        </h1>
+
+        <p class="hero-sub">
+          We build the products and the operating model that turn AI from a copilot
+          into a force multiplier — so engineering teams ship faster, with sharper
+          judgment, and a leverage curve that compounds.
+        </p>
+
+        <div class="hero-tag mono">
+          <span>//</span> human judgment &nbsp;·&nbsp; ai leverage &nbsp;·&nbsp; compounding craft
+        </div>
+
+        <div class="hero-actions">
+          <a href="#products" class="btn btn-primary btn-lg">See the products</a>
+          <a href="#vision" class="btn btn-ghost btn-lg">Read the vision</a>
+        </div>
+
+        <div class="hero-meta">
+          <span class="hero-meta-item"><span class="hero-meta-dot"></span> Engage · live</span>
+          <span class="hero-meta-item"><span class="hero-meta-dot"></span> Tempo · live</span>
+          <span class="hero-meta-item">Built for engineering leaders</span>
+        </div>
+      </div>
+
+      <span class="scroll-cue" aria-hidden="true"></span>
+    </section>
+
+    <!-- ═══════════ VISION + MISSION ═══════════ -->
+    <section class="vision" id="vision" aria-labelledby="vision-title">
+      <div class="container">
+        <div class="vision-grid">
+          <div class="vision-col reveal">
+            <span class="eyebrow">Our Vision</span>
+            <h2 id="vision-title">A world where engineering teams compound, not <em>collapse</em>.</h2>
+            <p>
+              The next decade of software will not be won by teams that adopt AI fastest.
+              It will be won by teams that build a <strong>system</strong> around it — one that
+              keeps human judgment at the center, scales craft instead of chaos, and turns
+              every shipped feature into accumulated leverage.
+            </p>
+            <p>
+              FlowCraft Systems exists to build that system, in software and in practice,
+              so engineering becomes a force multiplier for the whole business.
+            </p>
+          </div>
+
+          <div class="vision-rule" aria-hidden="true"></div>
+
+          <div class="vision-col reveal" data-delay="2">
+            <span class="eyebrow">Our Mission</span>
+            <h2>To make AI-native engineering the <em>default</em>, not the exception.</h2>
+            <p>
+              We design products, operating models, and craft practices that let any
+              engineering organization run on the same patterns the best AI-native teams
+              already use — measurable adoption, transparent leverage, and a culture that
+              treats AI as a serious teammate, not a parlor trick.
+            </p>
+            <p>
+              Two products today. A growing body of practice underneath. One operating
+              system for engineering, end to end.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PHILOSOPHY ═══════════ -->
+    <section class="philosophy" id="philosophy" aria-labelledby="philo-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">What We Believe</span>
+          <h2 id="philo-title">Five convictions that shape <em>everything</em> we ship.</h2>
+        </div>
+
+        <div class="belief-grid">
+          <article class="belief reveal">
+            <svg class="belief-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            <h3>AI is leverage, not labor.</h3>
+            <p>The win is not replacing engineers. It’s amplifying the ones with judgment, taste, and intent — and letting the rest catch up faster.</p>
+          </article>
+
+          <article class="belief reveal" data-delay="1">
+            <svg class="belief-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 12l4-7 5 5 4-2 5 4"/><circle cx="7" cy="5" r="1.5" fill="currentColor"/><circle cx="12" cy="10" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><circle cx="21" cy="12" r="1.5" fill="currentColor"/></svg>
+            <h3>What you can’t measure, you can’t scale.</h3>
+            <p>Adoption, leverage, and outcome data have to be observable. If a team can’t see its own curve, it can’t bend it.</p>
+          </article>
+
+          <article class="belief reveal" data-delay="2">
+            <svg class="belief-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
+            <h3>Operating models beat hot takes.</h3>
+            <p>“Use AI more” is not a strategy. We ship the rituals, gates, and feedback loops that turn intent into compounding behavior.</p>
+          </article>
+
+          <article class="belief reveal" data-delay="3">
+            <svg class="belief-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h16"/><path d="M18 10l3 2-3 2"/></svg>
+            <h3>Craft compounds. Chaos doesn’t.</h3>
+            <p>Speed without taste creates expensive entropy. We build for teams that want both throughput and a codebase they’re proud of.</p>
+          </article>
+
+          <article class="belief reveal" data-delay="4">
+            <svg class="belief-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 12l2 2 4-4"/></svg>
+            <h3>Trust is a deliverable.</h3>
+            <p>If leadership can’t trust the data, the system, or the team, no productivity number matters. Trust is shipped — same as code.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PRODUCTS ═══════════ -->
+    <section class="products" id="products" aria-labelledby="prod-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">The Products</span>
+          <h2 id="prod-title">Two systems. <em>One operating model.</em></h2>
+          <p>Engage measures and amplifies how your team uses AI day-to-day. Tempo aligns the work to the goals that matter. Together, they close the loop between leverage and outcomes.</p>
+        </div>
+
+        <div class="product-grid">
+
+          <!-- ENGAGE -->
+          <a href="https://engage.flowcraft.systems" class="product reveal" target="_blank" rel="noopener" aria-labelledby="engage-name">
+            <div class="product-chrome" aria-hidden="true">
+              <span class="product-dot r"></span><span class="product-dot y"></span><span class="product-dot g"></span>
+              <span class="product-url">engage.flowcraft.systems</span>
+              <span class="product-live"><span class="d"></span> Live</span>
+            </div>
+            <div class="product-body">
+              <span class="product-eyebrow">FlowCraft · Engage</span>
+              <h3 class="product-name" id="engage-name">FlowCraft <em class="grad">Engage</em></h3>
+              <p class="product-tag">AI engagement, measured. Leverage, made visible.</p>
+
+              <div class="product-mock engage-mock" aria-hidden="true">
+                <div class="engage-stat">
+                  <span class="engage-num">312<em>h</em> <span style="font-size:.7rem;color:var(--text-muted);font-family:var(--mono);letter-spacing:.06em;">/ wk saved</span></span>
+                  <span class="engage-lbl">Team leverage</span>
+                </div>
+                <div class="engage-bars">
+                  <div class="engage-bar-row"><span class="engage-bar-name">platform</span><span class="engage-bar-track"><span class="engage-bar-fill" data-fill="92" style="width:0"></span></span><span class="engage-bar-val">92%</span></div>
+                  <div class="engage-bar-row"><span class="engage-bar-name">growth</span><span class="engage-bar-track"><span class="engage-bar-fill" data-fill="78" style="width:0"></span></span><span class="engage-bar-val">78%</span></div>
+                  <div class="engage-bar-row"><span class="engage-bar-name">infra</span><span class="engage-bar-track"><span class="engage-bar-fill" data-fill="64" style="width:0"></span></span><span class="engage-bar-val">64%</span></div>
+                  <div class="engage-bar-row"><span class="engage-bar-name">data</span><span class="engage-bar-track"><span class="engage-bar-fill" data-fill="51" style="width:0"></span></span><span class="engage-bar-val">51%</span></div>
+                  <div class="engage-bar-row"><span class="engage-bar-name">qa</span><span class="engage-bar-track"><span class="engage-bar-fill" data-fill="37" style="width:0"></span></span><span class="engage-bar-val">37%</span></div>
+                </div>
+              </div>
+
+              <span class="product-cta">Visit engage.flowcraft.systems →</span>
+            </div>
+          </a>
+
+          <!-- TEMPO -->
+          <a href="https://tempo.flowcraft.systems" class="product reveal" data-delay="1" target="_blank" rel="noopener" aria-labelledby="tempo-name">
+            <div class="product-chrome" aria-hidden="true">
+              <span class="product-dot r"></span><span class="product-dot y"></span><span class="product-dot g"></span>
+              <span class="product-url">tempo.flowcraft.systems</span>
+              <span class="product-live"><span class="d"></span> Live</span>
+            </div>
+            <div class="product-body">
+              <span class="product-eyebrow">FlowCraft · Tempo</span>
+              <h3 class="product-name" id="tempo-name">FlowCraft <em class="grad">Tempo</em></h3>
+              <p class="product-tag">Aligns engineering capacity to the outcomes that matter.</p>
+
+              <div class="product-mock tempo-mock" aria-hidden="true">
+                <div class="tempo-head">
+                  <span class="name">Q4 · Goal Alignment</span>
+                  <span class="tempo-fit"><span style="width:6px;height:6px;border-radius:50%;background:var(--primary);box-shadow:0 0 8px var(--primary);"></span> 74% fit</span>
+                </div>
+
+                <div class="tempo-goals">
+                  <div class="goal">
+                    <div class="goal-head"><span class="name">API Platform</span><span class="pct" style="color:var(--green)">91%</span></div>
+                    <div class="goal-track"><span class="goal-fill fill-green" data-fill="91" style="width:0"></span></div>
+                  </div>
+                  <div class="goal">
+                    <div class="goal-head"><span class="name">Reliability</span><span class="pct" style="color:var(--amber)">78%</span></div>
+                    <div class="goal-track"><span class="goal-fill fill-amber" data-fill="78" style="width:0"></span></div>
+                  </div>
+                  <div class="goal">
+                    <div class="goal-head"><span class="name">AI Adoption</span><span class="pct" style="color:var(--red)">52%</span></div>
+                    <div class="goal-track"><span class="goal-fill fill-red" data-fill="52" style="width:0"></span></div>
+                  </div>
+                </div>
+
+                <div class="tempo-moves">
+                  <div class="move"><span class="tag tag-hire">Hire</span><span class="move-text">+1 staff eng to API Platform</span></div>
+                  <div class="move"><span class="tag tag-pair">Pair</span><span class="move-text">Reliability ↔ Platform on SLO rollout</span></div>
+                  <div class="move"><span class="tag tag-shift">Shift</span><span class="move-text">2 ICs from Growth → AI Adoption</span></div>
+                </div>
+              </div>
+
+              <span class="product-cta">Visit tempo.flowcraft.systems →</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ THE LOOP ═══════════ -->
+    <section class="loop" id="loop" aria-labelledby="loop-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">The AI-Native Engineering Loop</span>
+          <h2 id="loop-title">A closed loop between <em>leverage</em> and <em>outcomes</em>.</h2>
+          <p>Most teams measure activity. We measure the loop — so every cycle bends the curve, not just the calendar.</p>
+        </div>
+
+        <div class="loop-canvas reveal">
+          <svg viewBox="0 0 600 600" role="img" aria-label="Closed loop diagram: Measure, Align, Decide, Ship, Learn — all feeding back to the center.">
+            <defs>
+              <linearGradient id="loop-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"  stop-color="#8b5cf6"/>
+                <stop offset="100%" stop-color="#22d3ee"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Outer ring -->
+            <circle class="loop-arc" cx="300" cy="300" r="240" />
+
+            <!-- Connecting edges (5 nodes around the ring, 72° apart, starting from top) -->
+            <path class="loop-edge" d="M 300 60  A 240 240 0 0 1 528 388" />
+            <path class="loop-edge" d="M 528 388 A 240 240 0 0 1 359 532" />
+            <path class="loop-edge" d="M 359 532 A 240 240 0 0 1 175 502" />
+            <path class="loop-edge" d="M 175 502 A 240 240 0 0 1  72 388" />
+            <path class="loop-edge" d="M  72 388 A 240 240 0 0 1 300 60"  />
+
+            <!-- Center label -->
+            <g>
+              <text class="loop-center-text" x="300" y="295">the loop</text>
+              <text class="loop-center-sub"  x="300" y="316">leverage · outcomes</text>
+              <circle cx="300" cy="345" r="3" fill="#8b5cf6" opacity="0.6"/>
+            </g>
+
+            <!-- Nodes (positions match path endpoints above) -->
+            <g class="loop-node">
+              <circle class="loop-node-pulse" cx="300" cy="60" r="34"/>
+              <circle class="loop-node-circle" cx="300" cy="60" r="28"/>
+              <text class="loop-node-label" x="300" y="58">Measure</text>
+              <text class="loop-node-sub"   x="300" y="74">engage</text>
+            </g>
+            <g class="loop-node">
+              <circle class="loop-node-pulse" cx="528" cy="388" r="34"/>
+              <circle class="loop-node-circle" cx="528" cy="388" r="28"/>
+              <text class="loop-node-label" x="528" y="386">Align</text>
+              <text class="loop-node-sub"   x="528" y="402">tempo</text>
+            </g>
+            <g class="loop-node">
+              <circle class="loop-node-pulse" cx="359" cy="532" r="34"/>
+              <circle class="loop-node-circle" cx="359" cy="532" r="28"/>
+              <text class="loop-node-label" x="359" y="530">Decide</text>
+              <text class="loop-node-sub"   x="359" y="546">leadership</text>
+            </g>
+            <g class="loop-node">
+              <circle class="loop-node-pulse" cx="175" cy="502" r="34"/>
+              <circle class="loop-node-circle" cx="175" cy="502" r="28"/>
+              <text class="loop-node-label" x="175" y="500">Ship</text>
+              <text class="loop-node-sub"   x="175" y="516">teams</text>
+            </g>
+            <g class="loop-node">
+              <circle class="loop-node-pulse" cx="72" cy="388" r="34"/>
+              <circle class="loop-node-circle" cx="72" cy="388" r="28"/>
+              <text class="loop-node-label" x="72" y="386">Learn</text>
+              <text class="loop-node-sub"   x="72" y="402">retro</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="loop-legend">
+          <div class="loop-legend-item reveal">
+            <h4>Measure</h4><p>Engage surfaces leverage as it happens — by team, by repo, by intent.</p>
+          </div>
+          <div class="loop-legend-item reveal" data-delay="1">
+            <h4>Align</h4><p>Tempo maps capacity and signal to the outcomes leadership actually owns.</p>
+          </div>
+          <div class="loop-legend-item reveal" data-delay="2">
+            <h4>Decide → Ship → Learn</h4><p>Decisions become moves. Moves become shipped work. Shipped work feeds the loop.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ CONTACT ═══════════ -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-inner reveal">
+        <span class="eyebrow">Talk to us</span>
+        <h2 id="contact-title">If this <em>resonates</em>, we should talk.</h2>
+        <p>We work with engineering leaders who treat their team like a system — not a stack of tickets. If that’s you, get in touch.</p>
+        <div class="contact-actions">
+          <a href="mailto:hello@flowcraft.systems?subject=FlowCraft%20Systems%20—%20intro" class="btn btn-primary btn-lg">hello@flowcraft.systems</a>
+          <a href="https://engage.flowcraft.systems" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">See Engage</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ CAREERS ═══════════ -->
+    <section class="careers" id="careers" aria-labelledby="careers-title">
+      <div class="container">
+        <div class="careers-card reveal">
+          <div class="careers-eyebrow">Careers · always open to talent</div>
+          <h3 id="careers-title" style="font-family:var(--sans);font-size:1.15rem;color:var(--text);margin-bottom:8px;letter-spacing:-0.005em;">We don’t post roles. We meet people.</h3>
+          <p>If you’re a senior engineer, designer, or operator who is genuinely excited about building the operating system for AI-native engineering — write to <a href="mailto:careers@flowcraft.systems">careers@flowcraft.systems</a>. Tell us what you’ve built. We read everything.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="nav-mark" aria-hidden="true" style="width:24px;height:24px;"></span>
+        <span class="name">FlowCraft Systems</span>
+      </div>
+
+      <div class="footer-tag">Human Judgment. <em style="color:var(--cyan);">AI Leverage.</em></div>
+
+      <div class="footer-links">
+        <a href="https://engage.flowcraft.systems" target="_blank" rel="noopener">Engage</a>
+        <a href="https://tempo.flowcraft.systems"  target="_blank" rel="noopener">Tempo</a>
+        <a href="#vision">Vision</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="footer-note">
+        © <span id="year">2025</span> FlowCraft Systems · The Operating System for AI-Native Engineering
+      </div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>

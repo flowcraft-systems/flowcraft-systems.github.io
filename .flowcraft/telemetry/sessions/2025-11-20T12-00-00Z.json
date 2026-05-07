@@ -1,0 +1,12 @@
+{
+  "schema_version": "1",
+  "timestamp_utc": "2025-11-20T12-00-00Z",
+  "agent_name": "GitHub Copilot",
+  "task_type": "feature-design",
+  "manual_hours_equivalent": 5.0,
+  "agent_minutes": 35,
+  "session_summary": "Designed and shipped flowcraft.systems homepage (static, GH Pages): hero canvas, 9 sections, Engage + Tempo product mocks, SVG loop diagram, full a11y + reduced-motion.",
+  "repo": "flowcraft-systems/flowcraft-systems.github.io",
+  "team": "flowcraft-systems",
+  "is_synthetic": false
+}

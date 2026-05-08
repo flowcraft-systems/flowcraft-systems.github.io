@@ -258,9 +258,11 @@
 .philosophy { padding: var(--space-section) 0; }
 .belief-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 18px;
 }
+.belief { grid-column: span 2; }
+.belief:nth-child(n + 4) { grid-column: span 3; }
 .belief {
   position: relative;
   background: var(--surface-1);
@@ -282,6 +284,11 @@
 .belief-glyph { width: 44px; height: 44px; margin-bottom: 18px; color: var(--primary-soft); }
 .belief h3 { font-family: var(--sans); font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.3; letter-spacing: -0.005em; }
 .belief p { font-size: 0.88rem; line-height: 1.55; color: var(--text-soft); }
+@media (max-width: 760px) {
+  .belief-grid { grid-template-columns: 1fr; }
+  .belief,
+  .belief:nth-child(n + 4) { grid-column: auto; }
+}
 
 /* ════════════════════════════════════════════════════════════════════════
    PRODUCTS

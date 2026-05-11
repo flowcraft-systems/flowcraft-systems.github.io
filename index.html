@@ -417,24 +417,62 @@
         <!-- Assessment quiz renders here -->
         <div id="asm-container" class="asm-wrapper"></div>
 
-        <!-- Zoho CRM form — hidden, populated and submitted by the quiz engine -->
-        <div aria-hidden="true" style="display:none;">
-        <!-- Zoho CRM Web-to-Lead Form (hidden) -->
-        <div aria-hidden="true" style="display:none;">
-          <form id="webform1282748000000601002" action="https://crm.zoho.in/crm/WebToLeadForm" name="WebToLeads1282748000000601002" method="POST" accept-charset="UTF-8">
-            <input type="text" name="xnQsjsdp" value="c7082cc68291f437fd5e1326a88e8ec357b33402ddc18cd6dc426db1658c91fa" />
+        <!-- Zoho CRM Web-to-Lead Form — hidden, populated and submitted by the quiz engine -->
+        <div id="crmWebToEntityForm" class="zcwf_lblLeft crmWebToEntityForm" aria-hidden="true" style="display:none;">
+          <form id="webform1282748000000601002" action="https://crm.zoho.in/crm/WebToLeadForm" name="WebToLeads1282748000000601002" method="POST" onSubmit='javascript:document.charset="UTF-8"; return checkMandatory1282748000000601002()' accept-charset="UTF-8">
+            <input type="text" style="display:none;" name="xnQsjsdp" value="c7082cc68291f437fd5e1326a88e8ec357b33402ddc18cd6dc426db1658c91fa" />
             <input type="hidden" name="zc_gad" id="zc_gad" value="" />
-            <input type="text" name="xmIwtLD" value="7076afe7ff410b216fa23712b3b2d3f7fef1b04e4c56fdfa157c5a5e043cae33dbd59f64091cdb2a72df89d26bd6609a" />
-            <input type="text" name="actionType" value="TGVhZHM=" />
-            <input type="text" name="returnURL" value="https://flowcraft.systems/thank-you" />
-            <input type="text" name="Last Name" id="Last_Name" value="" />
-            <input type="text" name="Company"   id="Company"   value="" />
-            <input type="email" name="Email"    id="Email"     value="" />
-            <textarea name="Description" id="Description"></textarea>
-            <input type="text" name="aG9uZXlwb3Q" value="" />
+            <input type="text" style="display:none;" name="xmIwtLD" value="7076afe7ff410b216fa23712b3b2d3f7fef1b04e4c56fdfa157c5a5e043cae33dbd59f64091cdb2a72df89d26bd6609a" />
+            <input type="text" style="display:none;" name="actionType" value="TGVhZHM=" />
+            <input type="text" style="display:none;" name="returnURL" value="https://flowcraft.systems/thank-you" />
+            <!-- Do not remove this code. -->
+            <!-- Fields populated by the quiz engine -->
+            <input type="text" id="Last_Name" name="Last Name" maxlength="80" />
+            <input type="text" id="Company" name="Company" maxlength="200" />
+            <input type="text" id="Email" name="Email" maxlength="100" />
+            <textarea id="Description" name="Description"></textarea>
+            <input type="text" style="display:none;" name="aG9uZXlwb3Q" value="" />
+            <script>
+              function checkMandatory1282748000000601002() {
+                var mndFileds = new Array('Company', 'Last Name');
+                var fldLangVal = new Array('Company', 'Last\x20Name');
+                for (var i = 0; i < mndFileds.length; i++) {
+                  var fieldObj = document.forms['WebToLeads1282748000000601002'][mndFileds[i]];
+                  if (fieldObj) {
+                    if (((fieldObj.value).replace(/^\s+|\s+$/g, '')).length == 0) {
+                      if (fieldObj.type == 'file') { alert('Please select a file to upload.'); fieldObj.focus(); return false; }
+                      alert(fldLangVal[i] + ' cannot be empty.'); fieldObj.focus(); return false;
+                    } else if (fieldObj.nodeName == 'SELECT') {
+                      if (fieldObj.options[fieldObj.selectedIndex].value == '-None-') { alert(fldLangVal[i] + ' cannot be none.'); fieldObj.focus(); return false; }
+                    } else if (fieldObj.type == 'checkbox') {
+                      if (fieldObj.checked == false) { alert('Please accept  ' + fldLangVal[i]); fieldObj.focus(); return false; }
+                    }
+                    try { if (fieldObj.name == 'Last Name') { name = fieldObj.value; } } catch (e) {}
+                  }
+                }
+                var urlparams = new URLSearchParams(window.location.search);
+                if (urlparams.has('service') && (urlparams.get('service') === 'smarturl')) {
+                  var webform = document.getElementById('webform1282748000000601002');
+                  var smarturlfield = document.createElement('input');
+                  smarturlfield.setAttribute('type', 'hidden');
+                  smarturlfield.setAttribute('value', urlparams.get('service'));
+                  smarturlfield.setAttribute('name', 'service');
+                  webform.appendChild(smarturlfield);
+                }
+                document.querySelector('.crmWebToEntityForm .formsubmit').setAttribute('disabled', true);
+              }
+              function tooltipShow1282748000000601002(el) {
+                var tooltip = el.nextElementSibling;
+                var tooltipDisplay = tooltip.style.display;
+                if (tooltipDisplay == 'none') {
+                  var allTooltip = document.getElementsByClassName('zcwf_tooltip_over');
+                  for (var i = 0; i < allTooltip.length; i++) { allTooltip[i].style.display = 'none'; }
+                  tooltip.style.display = 'block';
+                } else { tooltip.style.display = 'none'; }
+              }
+            </script>
           </form>
         </div>
-      </div>
     </section>
 
     <!-- ═══════════ CAREERS ═══════════ -->

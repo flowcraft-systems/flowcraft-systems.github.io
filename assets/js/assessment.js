@@ -662,17 +662,19 @@
   function submitZoho(s) {
     const form = document.getElementById('webform1282748000000601002');
     if (!form) return;
-    const set = (name, val) => {
-      const el = form.querySelector(`[name="${name}"]`);
+    const setField = (name, val) => {
+      const el = form.querySelector('[name="' + name + '"]');
       if (el) el.value = val;
     };
-    set('Last Name', state.entry.lastName);
-    set('Company',   state.entry.company);
-    set('Email',     state.entry.email);
-    set('Description', buildDesc(s));
+    setField('Last Name', state.entry.lastName);
+    setField('Company',   state.entry.company);
+    setField('Email',     state.entry.email);
+    setField('Description', buildDesc(s));
     const btn = q('#asm-zoho-submit');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-    // form.submit() bypasses onsubmit handler — intentional
+    // Set charset explicitly — mirrors what Zoho's onSubmit handler does,
+    // since form.submit() bypasses the onSubmit event handler.
+    document.charset = 'UTF-8';
     form.submit();
   }
 

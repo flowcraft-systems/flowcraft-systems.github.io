@@ -1,0 +1,28 @@
+{
+  "name": "flowcraft-systems.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "e2e": "npm run start & sleep 2 && npx playwright test e2e/deal-sizing.spec.js",
+    "test:e2e": "npx playwright test e2e/deal-sizing.spec.js",
+    "test:e2e:headed": "npx playwright test e2e/deal-sizing.spec.js --headed",
+    "test:e2e:report": "npx playwright test e2e/deal-sizing.spec.js --reporter=html && npx playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flowcraft-systems/flowcraft-systems.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/flowcraft-systems/flowcraft-systems.github.io/issues"
+  },
+  "homepage": "https://github.com/flowcraft-systems/flowcraft-systems.github.io#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  }
+}

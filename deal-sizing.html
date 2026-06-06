@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#06060d" />
+
+  <title>FlowCraft Systems — Deal Sizing & Intake</title>
+  <meta name="description" content="Classify your engineering AI adoption, modernization, QA acceleration, or prototype need and receive an indicative high-level scope, t-shirt size, and recommended first engagement." />
+
+  <link rel="canonical" href="https://flowcraft.systems/deal-sizing" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="FlowCraft — Deal Sizing & Intake" />
+  <meta property="og:description" content="Get an indicative scope, t-shirt size, and recommended first engagement for your engineering AI initiative." />
+  <meta property="og:url" content="https://flowcraft.systems/deal-sizing" />
+  <meta property="og:image" content="https://flowcraft.systems/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="FlowCraft Systems: Deal Sizing & Intake" />
+  <meta property="og:site_name" content="FlowCraft Systems" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FlowCraft — Deal Sizing & Intake" />
+  <meta name="twitter:description" content="Classify your engineering AI need and get an indicative scope." />
+  <meta name="twitter:url" content="https://flowcraft.systems/deal-sizing" />
+  <meta name="twitter:image" content="https://flowcraft.systems/og-card.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/base.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css" />
+  <link rel="stylesheet" href="/assets/css/sections.css" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W8BTM9N3JX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W8BTM9N3JX');
+  </script>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- ═══════════ NAV ═══════════ -->
+  <header class="nav" role="banner">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand" aria-label="FlowCraft Systems home">
+        <span class="nav-mark" aria-hidden="true"></span>
+        <span class="nav-name">FlowCraft<em>Systems</em></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/#products">Products</a>
+        <a href="/#philosophy">Philosophy</a>
+        <a href="/#contact" class="nav-cta">Talk to us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="deal-hero" aria-labelledby="deal-hero-title">
+      <div class="container deal-hero-inner">
+        <div class="hero-badge">
+          <span class="dot dot-pulse" aria-hidden="true"></span>
+          Deal Sizing Engine
+        </div>
+        <h1 id="deal-hero-title">Size Your&nbsp;<em class="grad">AI&nbsp;Engineering</em>&nbsp;Opportunity</h1>
+        <p class="deal-hero-sub">
+          Answer a few questions and we'll classify your need, score its complexity,
+          and recommend a first engagement — with indicative pricing and product attach.
+          <strong>Estimates are non-binding and require human validation.</strong>
+        </p>
+        <div class="deal-hero-steps">
+          <span class="deal-step active" data-step="1">1. Context</span>
+          <span class="deal-step-arrow" aria-hidden="true">→</span>
+          <span class="deal-step" data-step="2">2. Problem</span>
+          <span class="deal-step-arrow" aria-hidden="true">→</span>
+          <span class="deal-step" data-step="3">3. Systems</span>
+          <span class="deal-step-arrow" aria-hidden="true">→</span>
+          <span class="deal-step" data-step="4">4. Evidence</span>
+          <span class="deal-step-arrow" aria-hidden="true">→</span>
+          <span class="deal-step" data-step="5">5. Results</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FORM ═══════════ -->
+    <section class="deal-form-section" aria-label="Deal intake form">
+      <div class="container">
+        <form id="dealForm" class="deal-form" novalidate>
+
+          <!-- ── STEP 1: Prospect & Buyer Context ── -->
+          <div class="deal-step-panel active" data-panel="1">
+            <div class="deal-step-header">
+              <span class="deal-step-num">01</span>
+              <div>
+                <h2>Prospect &amp; Buyer Context</h2>
+                <p class="deal-step-desc">Who is driving this initiative and what triggered the conversation?</p>
+              </div>
+            </div>
+
+            <div class="deal-field-grid">
+              <div class="deal-field">
+                <label for="companyName" class="deal-label">Company Name <span class="deal-req">*</span></label>
+                <input type="text" id="companyName" name="companyName" class="deal-input" required autocomplete="organization" />
+              </div>
+              <div class="deal-field">
+                <label for="prospectName" class="deal-label">Your Name <span class="deal-req">*</span></label>
+                <input type="text" id="prospectName" name="prospectName" class="deal-input" required autocomplete="name" />
+              </div>
+              <div class="deal-field">
+                <label for="workEmail" class="deal-label">Work Email <span class="deal-req">*</span></label>
+                <input type="email" id="workEmail" name="workEmail" class="deal-input" required autocomplete="email" />
+              </div>
+              <div class="deal-field">
+                <label for="buyerRole" class="deal-label">Your Role <span class="deal-req">*</span></label>
+                <select id="buyerRole" name="buyerRole" class="deal-select" required>
+                  <option value="">Select your role</option>
+                  <option value="CEO">CEO / Founder</option>
+                  <option value="CTO">CTO</option>
+                  <option value="VP_ENGINEERING">VP Engineering</option>
+                  <option value="HEAD_OF_ENGINEERING">Head of Engineering</option>
+                  <option value="PRODUCT_LEADER">Product Leader</option>
+                  <option value="QA_LEADER">QA Leader</option>
+                  <option value="ENGINEERING_MANAGER">Engineering Manager</option>
+                  <option value="OTHER">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="deal-field-grid">
+              <div class="deal-field">
+                <label class="deal-label">Accountable Owner Exists? <span class="deal-req">*</span></label>
+                <div class="deal-radio-group">
+                  <label class="deal-radio">
+                    <input type="radio" name="accountableOwnerExists" value="yes" required />
+                    <span class="deal-radio-indicator"></span>
+                    Yes
+                  </label>
+                  <label class="deal-radio">
+                    <input type="radio" name="accountableOwnerExists" value="no" />
+                    <span class="deal-radio-indicator"></span>
+                    No
+                  </label>
+                  <label class="deal-radio">
+                    <input type="radio" name="accountableOwnerExists" value="not_sure" />
+                    <span class="deal-radio-indicator"></span>
+                    Not sure
+                  </label>
+                </div>
+              </div>
+              <div class="deal-field">
+                <label for="accountableOwnerRole" class="deal-label">Who is Accountable?</label>
+                <select id="accountableOwnerRole" name="accountableOwnerRole" class="deal-select">
+                  <option value="">Select (if known)</option>
+                  <option value="SELF">Myself</option>
+                  <option value="ENGINEERING_LEADER">CTO / VP Eng / Head of Eng</option>
+                  <option value="CEO_OR_FOUNDER">CEO / Founder</option>
+                  <option value="PRODUCT_LEADER">Product leader</option>
+                  <option value="QA_OR_DELIVERY_LEADER">QA / Delivery leader</option>
+                  <option value="NO_CLEAR_OWNER">No clear owner yet</option>
+                  <option value="NOT_SURE">Not sure</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="deal-field deal-field--wide">
+              <label for="primaryTrigger" class="deal-label">Primary Trigger <span class="deal-req">*</span></label>
+              <select id="primaryTrigger" name="primaryTrigger" class="deal-select" required>
+                <option value="">What sparked this conversation?</option>
+                <option value="CEO_AI_FIRST_MANDATE">CEO mandate to become AI-first</option>
+                <option value="ENGINEERING_PRODUCTIVITY_PRESSURE">Engineering productivity pressure</option>
+                <option value="QA_RELEASE_PAIN">QA / release cycle pain</option>
+                <option value="LEGACY_MODERNIZATION_PRESSURE">Legacy modernization pressure</option>
+                <option value="PROTOTYPE_URGENCY">Need to prototype quickly</option>
+                <option value="UNCONTROLLED_AI_ADOPTION">Uncontrolled AI tool adoption</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+
+            <div class="deal-nav-buttons">
+              <span></span>
+              <button type="button" class="btn btn-primary btn-lg deal-next" data-next="2">Continue →</button>
+            </div>
+          </div>
+
+          <!-- ── STEP 2: Problem Definition ── -->
+          <div class="deal-step-panel" data-panel="2">
+            <div class="deal-step-header">
+              <span class="deal-step-num">02</span>
+              <div>
+                <h2>What Are You Trying to Solve?</h2>
+                <p class="deal-step-desc">Describe the engineering pain, goal, and success criteria.</p>
+              </div>
+            </div>
+
+            <div class="deal-field deal-field--wide">
+              <label for="primaryGoal" class="deal-label">Primary Goal <span class="deal-req">*</span></label>
+              <select id="primaryGoal" name="primaryGoal" class="deal-select" required>
+                <option value="">Select your primary goal</option>
+                <option value="IMPROVE_AI_CODING_ADOPTION">Improve AI coding adoption / governance</option>
+                <option value="REDUCE_QA_CYCLE_TIME">Reduce QA cycle time / improve release confidence</option>
+                <option value="MODERNIZE_LEGACY_SYSTEM">Modernize a legacy system</option>
+                <option value="BUILD_PROTOTYPE">Build a prototype / MVP quickly</option>
+                <option value="CREATE_AI_ENGINEERING_ROADMAP">Create an AI engineering roadmap</option>
+                <option value="BUSINESS_WORKFLOW_AUTOMATION">Automate a business workflow using AI</option>
+                <option value="RAG_OR_AGENTIC_APPLICATION">Create a RAG / agentic application</option>
+                <option value="NOT_SURE">Not sure yet — need direction</option>
+              </select>
+            </div>
+
+            <div class="deal-field deal-field--wide">
+              <label for="freeTextAsk" class="deal-label">Describe the Ask in Your Own Words <span class="deal-req">*</span></label>
+              <textarea id="freeTextAsk" name="freeTextAsk" class="deal-textarea" required minlength="30" placeholder="Example: We want our engineering team to use Cursor and Copilot properly, but we are worried about unsafe changes in our legacy .NET codebase. We need coding standards, governance, and a way to measure whether AI is actually helping." rows="4"></textarea>
+              <span class="deal-char-count" id="freeTextCharCount">0 / 30 min</span>
+            </div>
+
+            <div class="deal-field deal-field--wide">
+              <label class="deal-label">Which Areas Are Affected?</label>
+              <div class="deal-checkbox-grid">
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="affectedAreas" value="productDiscovery" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Product discovery / requirements
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="affectedAreas" value="development" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Development / coding
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="affectedAreas" value="architecture" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Architecture / modernization
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="affectedAreas" value="qa" />
+                  <span class="deal-checkbox-indicator"></span>
+                  QA / testing
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="affectedAreas" value="devOps" />
+                  <span class="deal-checkbox-indicator"></span>
+                  DevOps / release
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="affectedAreas" value="support" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Support / incidents
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="affectedAreas" value="management" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Engineering management / metrics
+                </label>
+              </div>
+            </div>
+
+            <div class="deal-field-grid">
+              <div class="deal-field">
+                <label class="deal-label">Success Metric Known? <span class="deal-req">*</span></label>
+                <div class="deal-radio-group">
+                  <label class="deal-radio">
+                    <input type="radio" name="successMetricKnown" value="yes" required />
+                    <span class="deal-radio-indicator"></span>
+                    Yes
+                  </label>
+                  <label class="deal-radio">
+                    <input type="radio" name="successMetricKnown" value="partially" />
+                    <span class="deal-radio-indicator"></span>
+                    Partially
+                  </label>
+                  <label class="deal-radio">
+                    <input type="radio" name="successMetricKnown" value="no" />
+                    <span class="deal-radio-indicator"></span>
+                    No
+                  </label>
+                </div>
+              </div>
+              <div class="deal-field">
+                <label for="currentPainLevel" class="deal-label">Current Pain Level <span class="deal-req">*</span></label>
+                <select id="currentPainLevel" name="currentPainLevel" class="deal-select" required>
+                  <option value="">Select pain level</option>
+                  <option value="MILD">Mild — exploratory</option>
+                  <option value="MODERATE">Moderate — visible business friction</option>
+                  <option value="SEVERE">Severe — blocking roadmap or releases</option>
+                  <option value="EXISTENTIAL">Existential — executive-level crisis</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="deal-field deal-field--wide deal-field--conditional" id="successMetricField">
+              <label for="successMetricDescription" class="deal-label">Success Metric / Desired Outcome</label>
+              <textarea id="successMetricDescription" name="successMetricDescription" class="deal-textarea" placeholder="Example: Reduce regression testing cycle from 8 days to 4 days; improve PR review turnaround by 40%; reduce bug RCA time." rows="3"></textarea>
+            </div>
+
+            <div class="deal-nav-buttons">
+              <button type="button" class="btn btn-ghost btn-lg deal-prev" data-prev="1">← Back</button>
+              <button type="button" class="btn btn-primary btn-lg deal-next" data-next="3">Continue →</button>
+            </div>
+          </div>
+
+          <!-- ── STEP 3: Engineering Context & Systems ── -->
+          <div class="deal-step-panel" data-panel="3">
+            <div class="deal-step-header">
+              <span class="deal-step-num">03</span>
+              <div>
+                <h2>Systems, Teams &amp; Data</h2>
+                <p class="deal-step-desc">What systems are involved, how many teams, and what's at stake?</p>
+              </div>
+            </div>
+
+            <div class="deal-field-grid">
+              <div class="deal-field">
+                <label for="engineeringTeamSize" class="deal-label">Engineering Team Size <span class="deal-req">*</span></label>
+                <select id="engineeringTeamSize" name="engineeringTeamSize" class="deal-select" required>
+                  <option value="">Select size</option>
+                  <option value="1_10">1–10</option>
+                  <option value="11_25">11–25</option>
+                  <option value="26_50">26–50</option>
+                  <option value="51_100">51–100</option>
+                  <option value="100_PLUS">100+</option>
+                </select>
+              </div>
+              <div class="deal-field">
+                <label for="affectedTeamCount" class="deal-label">Affected Teams <span class="deal-req">*</span></label>
+                <select id="affectedTeamCount" name="affectedTeamCount" class="deal-select" required>
+                  <option value="">Select scope</option>
+                  <option value="ONE_TEAM">One team / squad</option>
+                  <option value="TWO_TO_THREE_TEAMS">Two to three teams</option>
+                  <option value="DEPARTMENT">One department</option>
+                  <option value="MULTIPLE_DEPARTMENTS">Multiple departments</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="deal-field-grid">
+              <div class="deal-field">
+                <label for="systemContext" class="deal-label">System Context <span class="deal-req">*</span></label>
+                <select id="systemContext" name="systemContext" class="deal-select" required>
+                  <option value="">Select system type</option>
+                  <option value="GREENFIELD">Greenfield / new system</option>
+                  <option value="EXISTING_APPLICATION">Existing application</option>
+                  <option value="LEGACY_MONOLITH">Legacy monolith</option>
+                  <option value="DISTRIBUTED_SYSTEM">Distributed system / microservices</option>
+                  <option value="UNKNOWN">Unknown</option>
+                </select>
+              </div>
+              <div class="deal-field">
+                <label for="productionImpact" class="deal-label">Production Impact <span class="deal-req">*</span></label>
+                <select id="productionImpact" name="productionImpact" class="deal-select" required>
+                  <option value="">Select impact level</option>
+                  <option value="WORKSHOP_ONLY">Workshop / discovery only</option>
+                  <option value="PROTOTYPE_ONLY">Prototype only</option>
+                  <option value="INTERNAL_WORKFLOW">Internal workflow</option>
+                  <option value="CUSTOMER_FACING">Customer-facing (non-critical)</option>
+                  <option value="PRODUCTION_CRITICAL">Production critical / revenue impacting</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="deal-field-grid">
+              <div class="deal-field">
+                <label for="dataSensitivity" class="deal-label">Data Sensitivity <span class="deal-req">*</span></label>
+                <select id="dataSensitivity" name="dataSensitivity" class="deal-select" required>
+                  <option value="">Select sensitivity</option>
+                  <option value="PUBLIC_OR_SYNTHETIC">Public or synthetic data</option>
+                  <option value="INTERNAL">Internal non-sensitive data</option>
+                  <option value="CONFIDENTIAL">Confidential business data</option>
+                  <option value="PII">PII / customer data</option>
+                  <option value="REGULATED">PHI / financial / regulated data</option>
+                </select>
+              </div>
+              <div class="deal-field">
+                <label class="deal-label">Compliance Context</label>
+                <div class="deal-checkbox-row">
+                  <label class="deal-checkbox">
+                    <input type="checkbox" name="complianceContext" value="hipaa" />
+                    <span class="deal-checkbox-indicator"></span>
+                    HIPAA
+                  </label>
+                  <label class="deal-checkbox">
+                    <input type="checkbox" name="complianceContext" value="soc2" />
+                    <span class="deal-checkbox-indicator"></span>
+                    SOC 2
+                  </label>
+                  <label class="deal-checkbox">
+                    <input type="checkbox" name="complianceContext" value="gdpr" />
+                    <span class="deal-checkbox-indicator"></span>
+                    GDPR
+                  </label>
+                  <label class="deal-checkbox">
+                    <input type="checkbox" name="complianceContext" value="pci" />
+                    <span class="deal-checkbox-indicator"></span>
+                    PCI
+                  </label>
+                  <label class="deal-checkbox">
+                    <input type="checkbox" name="complianceContext" value="iso27001" />
+                    <span class="deal-checkbox-indicator"></span>
+                    ISO 27001
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="deal-nav-buttons">
+              <button type="button" class="btn btn-ghost btn-lg deal-prev" data-prev="2">← Back</button>
+              <button type="button" class="btn btn-primary btn-lg deal-next" data-next="4">Continue →</button>
+            </div>
+          </div>
+
+          <!-- ── STEP 4: Tooling, Evidence & Commercial ── -->
+          <div class="deal-step-panel" data-panel="4">
+            <div class="deal-step-header">
+              <span class="deal-step-num">04</span>
+              <div>
+                <h2>Current Tooling, Evidence &amp; Commercial Context</h2>
+                <p class="deal-step-desc">What tools are in use, what data exists, and your commercial preferences.</p>
+              </div>
+            </div>
+
+            <div class="deal-field deal-field--wide">
+              <label class="deal-label">Current AI Tools in Use</label>
+              <div class="deal-checkbox-grid">
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="currentAiTools" value="githubCopilot" />
+                  <span class="deal-checkbox-indicator"></span>
+                  GitHub Copilot
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="currentAiTools" value="cursor" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Cursor
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="currentAiTools" value="claudeCode" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Claude Code
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="currentAiTools" value="chatgpt" />
+                  <span class="deal-checkbox-indicator"></span>
+                  ChatGPT
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="currentAiTools" value="azureOpenAi" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Azure OpenAI
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="currentAiTools" value="internalLlmGateway" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Internal LLM Gateway
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="currentAiTools" value="none" />
+                  <span class="deal-checkbox-indicator"></span>
+                  None
+                </label>
+              </div>
+            </div>
+
+            <div class="deal-field deal-field--wide">
+              <label class="deal-label">Evidence Currently Available</label>
+              <div class="deal-checkbox-grid">
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="evidenceAvailable" value="jiraData" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Jira data
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="evidenceAvailable" value="githubData" />
+                  <span class="deal-checkbox-indicator"></span>
+                  GitHub / Git data
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="evidenceAvailable" value="cicdData" />
+                  <span class="deal-checkbox-indicator"></span>
+                  CI/CD data
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="evidenceAvailable" value="testCases" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Test case inventory
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="evidenceAvailable" value="architectureDiagrams" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Architecture diagrams
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="evidenceAvailable" value="releaseMetrics" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Release metrics
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="evidenceAvailable" value="codebaseAccess" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Codebase access
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="evidenceAvailable" value="developerSurvey" />
+                  <span class="deal-checkbox-indicator"></span>
+                  Developer survey data
+                </label>
+                <label class="deal-checkbox">
+                  <input type="checkbox" name="evidenceAvailable" value="none" />
+                  <span class="deal-checkbox-indicator"></span>
+                  None yet
+                </label>
+              </div>
+            </div>
+
+            <div class="deal-field deal-field--wide">
+              <label class="deal-label">Can Flowcraft review sanitized artifacts during discovery?</label>
+              <div class="deal-radio-group">
+                <label class="deal-radio">
+                  <input type="radio" name="sanitizedArtifactsAvailable" value="yes" />
+                  <span class="deal-radio-indicator"></span>
+                  Yes
+                </label>
+                <label class="deal-radio">
+                  <input type="radio" name="sanitizedArtifactsAvailable" value="no" />
+                  <span class="deal-radio-indicator"></span>
+                  No
+                </label>
+                <label class="deal-radio">
+                  <input type="radio" name="sanitizedArtifactsAvailable" value="not_sure" />
+                  <span class="deal-radio-indicator"></span>
+                  Not sure
+                </label>
+              </div>
+            </div>
+
+            <div class="deal-field-grid">
+              <div class="deal-field">
+                <label for="desiredTimeline" class="deal-label">Desired Timeline <span class="deal-req">*</span></label>
+                <select id="desiredTimeline" name="desiredTimeline" class="deal-select" required>
+                  <option value="">Select timeline</option>
+                  <option value="ONE_WEEK">1 week</option>
+                  <option value="TWO_TO_FOUR_WEEKS">2–4 weeks</option>
+                  <option value="FOUR_TO_EIGHT_WEEKS">4–8 weeks</option>
+                  <option value="EIGHT_TO_TWELVE_WEEKS">8–12 weeks</option>
+                  <option value="MORE_THAN_TWELVE_WEEKS">More than 12 weeks</option>
+                </select>
+              </div>
+              <div class="deal-field">
+                <label for="budgetRange" class="deal-label">Budget Range</label>
+                <select id="budgetRange" name="budgetRange" class="deal-select">
+                  <option value="">Select (if known)</option>
+                  <option value="BELOW_MINIMUM">Below ₹6L / below $12k</option>
+                  <option value="SMALL">Small: ₹6–15L / $12k–25k</option>
+                  <option value="MEDIUM">Medium: ₹15–40L / $25k–80k</option>
+                  <option value="LARGE">Large: ₹40L+ / $80k+</option>
+                  <option value="UNKNOWN">Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="deal-field-grid">
+              <div class="deal-field">
+                <label for="preferredEngagementModel" class="deal-label">Preferred Engagement Model</label>
+                <select id="preferredEngagementModel" name="preferredEngagementModel" class="deal-select">
+                  <option value="">Select preference</option>
+                  <option value="DIAGNOSTIC">Diagnostic / assessment</option>
+                  <option value="PILOT">Fixed-scope pilot</option>
+                  <option value="EMBEDDED_ADVISOR">Embedded advisor</option>
+                  <option value="PRODUCT_LICENSE">Product license</option>
+                  <option value="NOT_SURE">Not sure</option>
+                </select>
+              </div>
+              <div class="deal-field">
+                <label class="deal-label">Interested in recurring operating reviews?</label>
+                <div class="deal-radio-group">
+                  <label class="deal-radio">
+                    <input type="radio" name="interestedInRecurringReviews" value="yes" />
+                    <span class="deal-radio-indicator"></span>
+                    Yes
+                  </label>
+                  <label class="deal-radio">
+                    <input type="radio" name="interestedInRecurringReviews" value="no" />
+                    <span class="deal-radio-indicator"></span>
+                    No
+                  </label>
+                  <label class="deal-radio">
+                    <input type="radio" name="interestedInRecurringReviews" value="maybe" />
+                    <span class="deal-radio-indicator"></span>
+                    Maybe
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="deal-nav-buttons">
+              <button type="button" class="btn btn-ghost btn-lg deal-prev" data-prev="3">← Back</button>
+              <button type="submit" class="btn btn-primary btn-lg" id="dealCalculateBtn">Calculate Assessment →</button>
+            </div>
+          </div>
+
+        </form>
+
+        <!-- ── RESULTS PANEL ── -->
+        <div id="dealResults" class="deal-results" hidden>
+          <div class="deal-step-header">
+            <span class="deal-step-num">05</span>
+            <div>
+              <h2>Your Indicative Assessment</h2>
+              <p class="deal-step-desc">Based on your inputs, here is the recommended sizing and first engagement.</p>
+            </div>
+          </div>
+
+          <div class="deal-results-grid">
+            <!-- Score Summary -->
+            <div class="deal-result-card deal-result-card--score">
+              <h3 class="deal-result-label">Sizing Score</h3>
+              <div class="deal-score-display">
+                <span class="deal-score-value" id="resultTotalScore">—</span>
+                <span class="deal-score-max">/25</span>
+              </div>
+              <div class="deal-score-bars">
+                <div class="deal-score-bar-row">
+                  <span class="deal-score-bar-label">Scope Clarity</span>
+                  <div class="deal-score-bar-track"><div class="deal-score-bar-fill" id="resultScopeClarity" style="width:0%"></div></div>
+                  <span class="deal-score-bar-val" id="resultScopeClarityVal">0</span>
+                </div>
+                <div class="deal-score-bar-row">
+                  <span class="deal-score-bar-label">Technical Complexity</span>
+                  <div class="deal-score-bar-track"><div class="deal-score-bar-fill" id="resultTechComplexity" style="width:0%"></div></div>
+                  <span class="deal-score-bar-val" id="resultTechComplexityVal">0</span>
+                </div>
+                <div class="deal-score-bar-row">
+                  <span class="deal-score-bar-label">Data Compliance Risk</span>
+                  <div class="deal-score-bar-track"><div class="deal-score-bar-fill deal-score-bar-fill--amber" id="resultDataCompliance" style="width:0%"></div></div>
+                  <span class="deal-score-bar-val" id="resultDataComplianceVal">0</span>
+                </div>
+                <div class="deal-score-bar-row">
+                  <span class="deal-score-bar-label">Adoption Change Burden</span>
+                  <div class="deal-score-bar-track"><div class="deal-score-bar-fill deal-score-bar-fill--cyan" id="resultAdoptionBurden" style="width:0%"></div></div>
+                  <span class="deal-score-bar-val" id="resultAdoptionBurdenVal">0</span>
+                </div>
+                <div class="deal-score-bar-row">
+                  <span class="deal-score-bar-label">Production Criticality</span>
+                  <div class="deal-score-bar-track"><div class="deal-score-bar-fill deal-score-bar-fill--red" id="resultProductionCriticality" style="width:0%"></div></div>
+                  <span class="deal-score-bar-val" id="resultProductionCriticalityVal">0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- T-Shirt Size -->
+            <div class="deal-result-card deal-result-card--size">
+              <h3 class="deal-result-label">T-Shirt Size</h3>
+              <div class="deal-tshirt-display" id="resultTShirt">—</div>
+              <div class="deal-tshirt-details" id="resultDuration">—</div>
+            </div>
+
+            <!-- Service Line -->
+            <div class="deal-result-card deal-result-card--line">
+              <h3 class="deal-result-label">Detected Service Line</h3>
+              <div class="deal-service-line" id="resultServiceLine">—</div>
+            </div>
+
+            <!-- Entry Offer -->
+            <div class="deal-result-card deal-result-card--offer">
+              <h3 class="deal-result-label">Recommended First Engagement</h3>
+              <div class="deal-offer-name" id="resultEntryOffer">—</div>
+              <div class="deal-offer-product" id="resultProductAttach">—</div>
+            </div>
+
+            <!-- Price Band -->
+            <div class="deal-result-card deal-result-card--price">
+              <h3 class="deal-result-label">Indicative Price Band</h3>
+              <p class="deal-price-band" id="resultPriceBand">—</p>
+            </div>
+
+            <!-- 90-Day Path -->
+            <div class="deal-result-card deal-result-card--path">
+              <h3 class="deal-result-label">Recommended 90-Day Path</h3>
+              <p class="deal-path-text" id="resultNinetyDayPath">—</p>
+            </div>
+
+            <!-- Risk / Disqualification Flags -->
+            <div class="deal-result-card deal-result-card--flags">
+              <h3 class="deal-result-label">Risk &amp; Disqualification Flags</h3>
+              <div id="resultFlags">None detected</div>
+            </div>
+
+            <!-- Human Review -->
+            <div class="deal-result-card deal-result-card--review" id="resultHumanReview">
+              <h3 class="deal-result-label">Human Review Required</h3>
+              <p id="resultHumanReviewText">No</p>
+            </div>
+          </div>
+
+          <div class="deal-results-footer">
+            <div class="deal-disclaimer">
+              <strong>Disclaimer:</strong> This is an indicative non-binding estimate based on high-level inputs.
+              Final scope and pricing require a discovery review and validation of ownership, access, success criteria, and technical risk.
+            </div>
+            <div class="deal-results-actions">
+              <button type="button" class="btn btn-ghost btn-lg" onclick="window.print()">Print / PDF</button>
+              <a href="/#contact" class="btn btn-primary btn-lg">Schedule a Review →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Zoho CRM Web-to-Lead Form — hidden, populated by deal-sizing.js on submit -->
+    <div id="dealZohoWebform" class="zcwf_lblLeft crmWebToEntityForm" aria-hidden="true" style="display:none;">
+      <iframe id="dealZohoFrame" name="dealZohoFrame" style="display:none;"></iframe>
+      <form id="dealWebformZoho" action="https://crm.zoho.in/crm/WebToLeadForm" name="WebToLeads1282748000000601002" method="POST" target="dealZohoFrame" onSubmit='javascript:document.charset="UTF-8"; return checkMandatoryDealSizing()' accept-charset="UTF-8">
+        <input type="text" style="display:none;" name="xnQsjsdp" value="c7082cc68291f437fd5e1326a88e8ec357b33402ddc18cd6dc426db1658c91fa" />
+        <input type="hidden" name="zc_gad" id="zc_gad_deal" value="" />
+        <input type="text" style="display:none;" name="xmIwtLD" value="7076afe7ff410b216fa23712b3b2d3f7fef1b04e4c56fdfa157c5a5e043cae33dbd59f64091cdb2a72df89d26bd6609a" />
+        <input type="text" style="display:none;" name="actionType" value="TGVhZHM=" />
+        <input type="text" style="display:none;" name="returnURL" value="https://flowcraft.systems/deal-sizing" />
+        <input type="text" id="deal_Last_Name" name="Last Name" maxlength="80" />
+        <input type="text" id="deal_Company" name="Company" maxlength="200" />
+        <input type="text" id="deal_Email" name="Email" maxlength="100" />
+        <textarea id="deal_Description" name="Description"></textarea>
+        <input type="text" style="display:none;" name="aG9uZXlwb3Q" value="" />
+        <script>
+          function checkMandatoryDealSizing() {
+            var mndFileds = new Array('Company', 'Last Name');
+            var fldLangVal = new Array('Company', 'Last\x20Name');
+            for (var i = 0; i < mndFileds.length; i++) {
+              var fieldObj = document.forms['WebToLeads1282748000000601002'][mndFileds[i]];
+              if (fieldObj) {
+                if (((fieldObj.value).replace(/^\s+|\s+$/g, '')).length == 0) {
+                  if (fieldObj.type == 'file') { alert('Please select a file to upload.'); fieldObj.focus(); return false; }
+                  alert(fldLangVal[i] + ' cannot be empty.'); fieldObj.focus(); return false;
+                } else if (fieldObj.nodeName == 'SELECT') {
+                  if (fieldObj.options[fieldObj.selectedIndex].value == '-None-') { alert(fldLangVal[i] + ' cannot be none.'); fieldObj.focus(); return false; }
+                } else if (fieldObj.type == 'checkbox') {
+                  if (fieldObj.checked == false) { alert('Please accept  ' + fldLangVal[i]); fieldObj.focus(); return false; }
+                }
+              }
+            }
+            document.querySelector('.crmWebToEntityForm .formsubmit').setAttribute('disabled', true);
+          }
+        </script>
+      </form>
+    </div>
+
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="nav-mark" aria-hidden="true" style="width:24px;height:24px;"></span>
+        <span class="name">FlowCraft Systems</span>
+      </div>
+
+      <div class="footer-tag">Human Judgment. <em style="color:var(--cyan);">AI Leverage.</em></div>
+
+      <div class="footer-links">
+        <a href="https://engage.flowcraft.systems" target="_blank" rel="noopener">Engage</a>
+        <a href="https://tempo.flowcraft.systems"  target="_blank" rel="noopener">Tempo</a>
+        <a href="/#vision">Vision</a>
+        <a href="/#contact">Contact</a>
+      </div>
+
+      <div class="footer-note">
+        © <span id="year">2025</span> FlowCraft Systems · The Operating System for AI-Native Engineering
+      </div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script defer src="/assets/js/deal-sizing.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>

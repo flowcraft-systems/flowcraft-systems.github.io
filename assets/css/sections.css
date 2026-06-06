@@ -1505,6 +1505,22 @@
   flex-wrap: wrap;
 }
 
+/* ─── Deal Status ──────────────────────────────────────────────────────── */
+.deal-result-card--status { grid-column: 1 / -1; }
+.deal-result-card--qualified { border-left: 3px solid var(--green); }
+.deal-result-card--weakfit { border-left: 3px solid var(--amber); }
+.deal-result-card--dealbreaker { border-left: 3px solid var(--red); }
+.deal-result-card--confidence { grid-column: 1 / -1; }
+.deal-result-card--conf-high { border-left: 3px solid var(--green); }
+.deal-result-card--conf-medium { border-left: 3px solid var(--amber); }
+.deal-result-card--conf-low { border-left: 3px solid var(--primary); }
+.deal-result-card--conf-fatal { border-left: 3px solid var(--red); }
+.deal-result-card--risk { grid-column: 1 / -1; }
+.deal-result-card--questions { grid-column: 1 / -1; }
+.deal-flag--high { border-color: rgba(239,68,68,0.3) !important; color: var(--red) !important; }
+.deal-flag--medium { border-color: rgba(245,158,11,0.3) !important; color: var(--amber) !important; }
+.deal-flag--question { border-color: rgba(139,92,246,0.3) !important; color: var(--primary-soft) !important; font-style: italic; }
+
 /* ─── Print Styles ─────────────────────────────────────────────────────── */
 @media print {
   .nav,

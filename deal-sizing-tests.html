@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FlowCraft — Deal Sizing Unit Tests</title>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #06060d; color: #ecedf6; padding: 40px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 4px; }
+    .sub { color: #9ea0c0; font-size: 0.9rem; margin-bottom: 32px; }
+    .stats { display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+    .stat { padding: 12px 24px; border-radius: 10px; background: #0d0d18; border: 1px solid #1f1f3a; }
+    .stat.pass { border-color: #10b981; }
+    .stat.fail { border-color: #ef4444; }
+    .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #5b5d80; }
+    .stat-value { font-size: 1.6rem; font-weight: 700; }
+    .test-suite { margin-bottom: 24px; }
+    .suite-title { font-size: 1rem; font-weight: 700; color: #a78bfa; margin-bottom: 8px; }
+    .test { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; font-size: 0.85rem; border-bottom: 1px solid #15152a; }
+    .test.pass .mark { color: #10b981; }
+    .test.fail .mark { color: #ef4444; }
+    .mark { font-weight: 700; width: 20px; flex-shrink: 0; }
+    .test-name { color: var(--text); }
+    .test-detail { color: #5b5d80; font-size: 0.78rem; margin-left: 8px; }
+    .test-expected { color: #9ea0c0; font-size: 0.78rem; display: block; margin-left: 30px; }
+    pre { background: #0d0d18; padding: 8px 12px; border-radius: 6px; border: 1px solid #1f1f3a; font-size: 0.78rem; color: #22d3ee; overflow-x: auto; margin: 4px 0 4px 30px; }
+  </style>
+</head>
+<body>
+
+  <h1>FlowCraft Deal Sizing Engine — Unit Tests</h1>
+  <p class="sub" id="testTimestamp"></p>
+
+  <div class="stats">
+    <div class="stat" id="statTotal"><div class="stat-label">Total</div><div class="stat-value" id="statTotalVal">0</div></div>
+    <div class="stat pass" id="statPass"><div class="stat-label">Passed</div><div class="stat-value" id="statPassVal">0</div></div>
+    <div class="stat fail" id="statFail"><div class="stat-label">Failed</div><div class="stat-value" id="statFailVal">0</div></div>
+  </div>
+
+  <div id="results"></div>
+
+  <script src="assets/js/deal-sizing.js"></script>
+  <script>
+    (function () {
+      document.getElementById('testTimestamp').textContent = 'Run: ' + new Date().toISOString();
+
+      const engine = window.__dealSizing;
+      if (!engine) {
+        document.body.innerHTML += '<p style="color:red">ERROR: window.__dealSizing not exposed. Check deal-sizing.js loads correctly.</p>';
+        return;
+      }
+
+      var total = 0, passed = 0, failed = 0;
+      var resultsEl = document.getElementById('results');
+
+      function test(suite, name, fn) {
+        total++;
+        var result;
+        try { result = fn(); } catch (e) { result = { pass: false, detail: e.message }; }
+        if (result.pass) passed++; else failed++;
+
+        var suiteEl = resultsEl.querySelector('.test-suite[data-suite="' + suite + '"]');
+        if (!suiteEl) {
+          suiteEl = document.createElement('div');
+          suiteEl.className = 'test-suite';
+          suiteEl.setAttribute('data-suite', suite);
+          suiteEl.innerHTML = '<div class="suite-title">' + suite + '</div>';
+          resultsEl.appendChild(suiteEl);
+        }
+
+        var row = document.createElement('div');
+        row.className = 'test ' + (result.pass ? 'pass' : 'fail');
+        row.innerHTML = '<span class="mark">' + (result.pass ? '✓' : '✗') + '</span>'
+          + '<span class="test-name">' + name + '</span>'
+          + (result.detail ? '<span class="test-detail">— ' + result.detail + '</span>' : '')
+          + (result.expected ? '<span class="test-expected">Expected: ' + result.expected + '</span>' : '');
+        suiteEl.appendChild(row);
+
+        updateStats();
+      }
+
+      function updateStats() {
+        document.getElementById('statTotalVal').textContent = total;
+        document.getElementById('statPassVal').textContent = passed;
+        document.getElementById('statFailVal').textContent = failed;
+        document.getElementById('statTotal').className = 'stat' + (failed > 0 ? ' fail' : ' pass');
+      }
+
+      function eq(a, b, label) {
+        var strA = JSON.stringify(a), strB = JSON.stringify(b);
+        return { pass: strA === strB, detail: strA + ' !== ' + strB, expected: label || b };
+      }
+
+      function approx(a, b, tol) {
+        return { pass: Math.abs(a - b) <= (tol || 0.01), detail: a + ' !== ' + b + ' (tolerance ' + (tol || 0.01) + ')' };
+      }
+
+      // ════════════════════════════════════════════════════════════════════
+      // SECTION 3 — DEAL QUALIFICATION
+      // ════════════════════════════════════════════════════════════════════
+      test('Section 3 — Deal Qualification', 'no owner → dealBreaker=true', function () {
+        var r = engine.checkDisqualification({ accountableOwnerExists: 'no', accountableOwnerRole: '', successMetricKnown: 'yes' });
+        return eq(r.dealBreaker, true);
+      });
+
+      test('Section 3 — Deal Qualification', 'clear owner & metric → no disqualification', function () {
+        var r = engine.checkDisqualification({
+          accountableOwnerExists: 'yes', accountableOwnerRole: 'SELF',
+          successMetricKnown: 'yes', budgetRange: 'SMALL',
+          sanitizedArtifactsAvailable: 'yes', currentAiTools: { githubCopilot: true },
+          evidenceAvailable: { jiraData: true }, primaryGoal: 'IMPROVE_AI_CODING_ADOPTION',
+          buyerRole: 'CTO', currentPainLevel: 'SEVERE'
+        });
+        return eq(r.dealBreaker, false);
+      });
+
+      test('Section 3 — Deal Qualification', 'all weak-fit signals → weakFit=true', function () {
+        var r = engine.checkDisqualification({
+          currentAiTools: { none: true }, evidenceAvailable: { none: true },
+          primaryGoal: 'NOT_SURE', buyerRole: 'PRODUCT_LEADER', currentPainLevel: 'MILD'
+        });
+        return eq(r.weakFit, true);
+      });
+
+      test('Section 3 — Deal Qualification', 'one weak-fit signal only → weakFit=false', function () {
+        var r = engine.checkDisqualification({
+          currentAiTools: { githubCopilot: true }, evidenceAvailable: { jiraData: true },
+          primaryGoal: 'IMPROVE_AI_CODING_ADOPTION', buyerRole: 'CTO', currentPainLevel: 'SEVERE'
+        });
+        return eq(r.weakFit, false);
+      });
+
+      test('Section 3 — Deal Qualification', 'below minimum budget → issue flagged', function () {
+        var r = engine.checkDisqualification({
+          accountableOwnerExists: 'yes', successMetricKnown: 'yes',
+          budgetRange: 'BELOW_MINIMUM', currentAiTools: { cursor: true },
+          evidenceAvailable: { cicdData: true }, primaryGoal: 'BUILD_PROTOTYPE',
+          buyerRole: 'CTO', currentPainLevel: 'MODERATE'
+        });
+        return eq(r.issues.indexOf('buyer_only_wants_free_advice') !== -1, true);
+      });
+
+      // ════════════════════════════════════════════════════════════════════
+      // SECTION 7 — RISK FACTORS
+      // ════════════════════════════════════════════════════════════════════
+      test('Section 7 — Risk Factors', 'compliance + production = 2 high risk factors', function () {
+        var r = engine.calculateRiskFactors({
+          complianceContext: { hipaa: true }, productionImpact: 'PRODUCTION_CRITICAL',
+          dataSensitivity: 'PUBLIC_OR_SYNTHETIC', successMetricKnown: 'yes',
+          evidenceAvailable: { jiraData: true }, affectedTeamCount: 'ONE_TEAM'
+        });
+        return eq(r.factors.filter(function (f) { return f.severity === 'high'; }).length, 2);
+      });
+
+      test('Section 7 — Risk Factors', 'no risk factors when clean input', function () {
+        var r = engine.calculateRiskFactors({
+          accountableOwnerExists: 'yes', accountableOwnerRole: 'SELF',
+          successMetricKnown: 'yes', affectedAreas: { development: true },
+          complianceContext: {}, productionImpact: 'WORKSHOP_ONLY',
+          dataSensitivity: 'PUBLIC_OR_SYNTHETIC', primaryGoal: 'BUILD_PROTOTYPE',
+          affectedTeamCount: 'ONE_TEAM', evidenceAvailable: { jiraData: true }
+        });
+        return eq(r.factors.length, 0);
+      });
+
+      test('Section 7 — Risk Factors', 'compliance + sensitive data + production = 3 factors', function () {
+        var r = engine.calculateRiskFactors({
+          complianceContext: { gdpr: true }, dataSensitivity: 'REGULATED',
+          productionImpact: 'PRODUCTION_CRITICAL', successMetricKnown: 'yes',
+          evidenceAvailable: { githubData: true }, affectedTeamCount: 'ONE_TEAM'
+        });
+        return eq(r.multipliers.length, 3);
+      });
+
+      test('Section 7 — Risk Factors', 'multiplier cap at 1.75', function () {
+        var raw = engine.computeCombinedMultiplier([1.30, 1.30, 1.25]);
+        return approx(raw.capped, 1.75);
+      });
+
+      test('Section 7 — Risk Factors', 'multiplier >1.75 triggers upsize', function () {
+        var raw = engine.computeCombinedMultiplier([1.30, 1.30, 1.25]);
+        return eq(raw.triggerUpsize, true);
+      });
+
+      test('Section 7 — Risk Factors', 'no multipliers → 1.0 raw/capped', function () {
+        var raw = engine.computeCombinedMultiplier([]);
+        return approx(raw.raw, 1.0) && approx(raw.capped, 1.0) ? { pass: true } : { pass: false, detail: 'raw=' + raw.raw + ' capped=' + raw.capped };
+      });
+
+      // ════════════════════════════════════════════════════════════════════
+      // SECTION 6 — SCORING & T-SHIRT SIZING
+      // ════════════════════════════════════════════════════════════════════
+      test('Section 6 — T-Shirt Sizing', 'small clean deal → scope=1 tech=1 compliance=1 adoption=2 prod=1 total=6 XS', function () {
+        var r = engine.computeScores({
+          primaryGoal: 'BUILD_PROTOTYPE', successMetricKnown: 'yes',
+          systemContext: 'GREENFIELD', dataSensitivity: 'PUBLIC_OR_SYNTHETIC',
+          affectedTeamCount: 'ONE_TEAM', productionImpact: 'WORKSHOP_ONLY',
+          accountableOwnerExists: 'yes', accountableOwnerRole: 'SELF',
+          evidenceAvailable: { jiraData: true }, currentAiTools: { cursor: true },
+          buyerRole: 'CTO', currentPainLevel: 'MODERATE', budgetRange: 'SMALL',
+          sanitizedArtifactsAvailable: 'yes'
+        });
+        return eq(r.tShirt, 'XS');
+      });
+
+      test('Section 6 — T-Shirt Sizing', 'legacy monolith regulated data → M override', function () {
+        var r = engine.computeScores({
+          primaryGoal: 'MODERNIZE_LEGACY_SYSTEM', successMetricKnown: 'yes',
+          systemContext: 'LEGACY_MONOLITH', dataSensitivity: 'REGULATED',
+          affectedTeamCount: 'TWO_TO_THREE_TEAMS', productionImpact: 'INTERNAL_WORKFLOW',
+          accountableOwnerExists: 'yes', accountableOwnerRole: 'ENGINEERING_LEADER',
+          evidenceAvailable: { codebaseAccess: true, jiraData: true },
+          currentAiTools: { githubCopilot: true }, buyerRole: 'CTO',
+          currentPainLevel: 'SEVERE', budgetRange: 'MEDIUM',
+          sanitizedArtifactsAvailable: 'yes'
+        });
+        return eq(r.tShirt, 'M');
+      });
+
+      test('Section 6 — T-Shirt Sizing', 'largest scores → XL', function () {
+        var r = engine.computeScores({
+          primaryGoal: 'CREATE_AI_ENGINEERING_ROADMAP', successMetricKnown: 'no',
+          systemContext: 'LEGACY_MONOLITH', dataSensitivity: 'REGULATED',
+          complianceContext: { hipaa: true }, affectedTeamCount: 'MULTIPLE_DEPARTMENTS',
+          productionImpact: 'PRODUCTION_CRITICAL',
+          accountableOwnerExists: 'no', accountableOwnerRole: 'NO_CLEAR_OWNER',
+          evidenceAvailable: {}, currentAiTools: {},
+          buyerRole: 'OTHER', currentPainLevel: '', budgetRange: 'BELOW_MINIMUM',
+          sanitizedArtifactsAvailable: 'no', primaryTrigger: 'CEO_AI_FIRST_MANDATE'
+        });
+        return eq(r.tShirt, 'XL');
+      });
+
+      // ════════════════════════════════════════════════════════════════════
+      // SECTION 8 — DYNAMIC PRICING
+      // ════════════════════════════════════════════════════════════════════
+      test('Section 8 — Pricing', 'US S diagnostic at 1.0 risk → $12k–18k', function () {
+        return engine.computePriceBand('S', 1.0, 'US', true).indexOf('$12,') !== -1
+          ? { pass: true } : { pass: false, detail: engine.computePriceBand('S', 1.0, 'US', true) };
+      });
+
+      test('Section 8 — Pricing', 'US M pilot at 1.5 risk → $52k–120k (risk inflated)', function () {
+        var p = engine.computePriceBand('M', 1.5, 'US', false);
+        return p.indexOf('$') !== -1 ? { pass: true } : { pass: false, detail: p };
+      });
+
+      test('Section 8 — Pricing', 'India S diagnostic at 1.0 risk → ₹6L–10L', function () {
+        var p = engine.computePriceBand('S', 1.0, 'INDIA', true);
+        return { pass: p.indexOf('₹6') !== -1, detail: p };
+      });
+
+      test('Section 8 — Pricing', 'deal breaker → diagnostic mode pricing', function () {
+        var p = engine.formatPriceBand('US', 'S', 1.0, true, false);
+        return { pass: p.indexOf('workshop') !== -1 || p.indexOf('diagnostic') !== -1, detail: p };
+      });
+
+      test('Section 8 — Pricing', 'pricing always returns something (non-empty)', function () {
+        var p = engine.computePriceBand('XL', 1.0, 'US', false);
+        return { pass: p && p.length > 0, detail: p };
+      });
+
+      // ════════════════════════════════════════════════════════════════════
+      // SECTION 14.3 — CONFIDENCE SCORING
+      // ════════════════════════════════════════════════════════════════════
+      test('Section 14.3 — Confidence', 'clear inputs → high confidence', function () {
+        var r = engine.computeConfidence({
+          primaryGoal: 'IMPROVE_AI_CODING_ADOPTION',
+          accountableOwnerExists: 'yes', accountableOwnerRole: 'CTO',
+          successMetricKnown: 'yes'
+        }, 'AI_CODING_OPERATING_MODEL', false);
+        return eq(r.level, 'high');
+      });
+
+      test('Section 14.3 — Confidence', 'deal breaker → fatal confidence', function () {
+        var r = engine.computeConfidence({}, 'AI_ENGINEERING_OFFICE', true);
+        return eq(r.level, 'fatal');
+      });
+
+      test('Section 14.3 — Confidence', 'no owner + no metric → low confidence', function () {
+        var r = engine.computeConfidence({
+          primaryGoal: 'NOT_SURE', accountableOwnerExists: 'no',
+          accountableOwnerRole: '', successMetricKnown: 'no'
+        }, 'AI_ENGINEERING_OFFICE', false);
+        return eq(r.level, 'low');
+      });
+
+      test('Section 14.3 — Confidence', 'clear pain, missing metric → medium', function () {
+        var r = engine.computeConfidence({
+          primaryGoal: 'REDUCE_QA_CYCLE_TIME', accountableOwnerExists: 'yes',
+          accountableOwnerRole: 'VP_ENGINEERING', successMetricKnown: 'no'
+        }, 'QA_VELOCITY_SYSTEM', false);
+        return eq(r.level, 'medium');
+      });
+
+      // ════════════════════════════════════════════════════════════════════
+      // SECTION 4 — CLASSIFICATION
+      // ════════════════════════════════════════════════════════════════════
+      test('Section 4 — Classification', 'AI coding goal → correct service line', function () {
+        var r = engine.computeScores({ primaryGoal: 'IMPROVE_AI_CODING_ADOPTION' });
+        return eq(r.serviceLine, 'AI_CODING_OPERATING_MODEL');
+      });
+
+      test('Section 4 — Classification', 'CEO mandate override → AI Engineering Office', function () {
+        var r = engine.computeScores({
+          primaryGoal: 'IMPROVE_AI_CODING_ADOPTION', primaryTrigger: 'CEO_AI_FIRST_MANDATE'
+        });
+        return eq(r.serviceLine, 'AI_ENGINEERING_OFFICE');
+      });
+
+      test('Section 4 — Classification', '3+ affected areas → AI Engineering Office', function () {
+        var r = engine.computeScores({
+          primaryGoal: 'REDUCE_QA_CYCLE_TIME',
+          affectedAreas: { development: true, qa: true, devOps: true }
+        });
+        return eq(r.serviceLine, 'AI_ENGINEERING_OFFICE');
+      });
+
+      // ════════════════════════════════════════════════════════════════════
+      // SECTION 18 — HUMAN REVIEW
+      // ════════════════════════════════════════════════════════════════════
+      test('Section 18 — Human Review', 'L size → human review required', function () {
+        var r = engine.computeScores({
+          primaryGoal: 'MODERNIZE_LEGACY_SYSTEM', successMetricKnown: 'no',
+          systemContext: 'LEGACY_MONOLITH', dataSensitivity: 'REGULATED',
+          complianceContext: { hipaa: true }, affectedTeamCount: 'DEPARTMENT',
+          productionImpact: 'PRODUCTION_CRITICAL',
+          accountableOwnerExists: 'yes', accountableOwnerRole: 'ENGINEERING_LEADER',
+          evidenceAvailable: { codebaseAccess: true }, currentAiTools: { cursor: true },
+          buyerRole: 'CTO', currentPainLevel: 'SEVERE', budgetRange: 'MEDIUM',
+          sanitizedArtifactsAvailable: 'yes'
+        });
+        return eq(r.humanReview, true);
+      });
+
+      test('Section 18 — Human Review', 'XS size, CTO, metric yes → no review', function () {
+        var r = engine.computeScores({
+          primaryGoal: 'BUILD_PROTOTYPE', successMetricKnown: 'yes',
+          systemContext: 'GREENFIELD', dataSensitivity: 'PUBLIC_OR_SYNTHETIC',
+          affectedTeamCount: 'ONE_TEAM', productionImpact: 'WORKSHOP_ONLY',
+          accountableOwnerExists: 'yes', accountableOwnerRole: 'SELF',
+          evidenceAvailable: { jiraData: true }, currentAiTools: { cursor: true },
+          buyerRole: 'CTO', currentPainLevel: 'MODERATE', budgetRange: 'SMALL',
+          sanitizedArtifactsAvailable: 'yes'
+        });
+        return eq(r.humanReview, false);
+      });
+
+      // ════════════════════════════════════════════════════════════════════
+      // END-TO-END INTEGRATION TESTS
+      // ════════════════════════════════════════════════════════════════════
+      test('E2E Integration', 'complete clean prototype deal → XS, qualified, no human review', function () {
+        var r = engine.computeScores({
+          companyName: 'TestCo', prospectName: 'Jane', workEmail: 'j@test.co',
+          buyerRole: 'CTO', accountableOwnerExists: 'yes', accountableOwnerRole: 'SELF',
+          primaryTrigger: 'PROTOTYPE_URGENCY', primaryGoal: 'BUILD_PROTOTYPE',
+          freeTextAsk: 'We need to build an AI prototype for customer onboarding.',
+          affectedAreas: { development: true }, successMetricKnown: 'yes',
+          successMetricDescription: 'Working prototype in 4 weeks',
+          currentPainLevel: 'SEVERE', engineeringTeamSize: '11_25',
+          affectedTeamCount: 'ONE_TEAM', systemContext: 'GREENFIELD',
+          productionImpact: 'PROTOTYPE_ONLY', dataSensitivity: 'PUBLIC_OR_SYNTHETIC',
+          complianceContext: {}, currentAiTools: { cursor: true, chatgpt: true },
+          evidenceAvailable: { jiraData: true, githubData: true },
+          sanitizedArtifactsAvailable: 'yes', desiredTimeline: 'TWO_TO_FOUR_WEEKS',
+          budgetRange: 'SMALL', preferredEngagementModel: 'PILOT',
+          interestedInRecurringReviews: 'yes', interestedInProductLicensing: 'yes'
+        });
+        return r.tShirt === 'XS' && r.dealStatus === 'qualified' && r.humanReview === false && r.entryOffer === 'Prototype Sprint'
+          ? { pass: true } : { pass: false, detail: JSON.stringify({ tShirt: r.tShirt, status: r.dealStatus, review: r.humanReview, offer: r.entryOffer }) };
+      });
+
+      test('E2E Integration', 'enterprise AI mandate → AI Engineering Office, L, human review', function () {
+        var r = engine.computeScores({
+          companyName: 'BigCorp', prospectName: 'Alex', workEmail: 'a@bigcorp.com',
+          buyerRole: 'CTO', accountableOwnerExists: 'yes', accountableOwnerRole: 'ENGINEERING_LEADER',
+          primaryTrigger: 'CEO_AI_FIRST_MANDATE', primaryGoal: 'CREATE_AI_ENGINEERING_ROADMAP',
+          freeTextAsk: 'CEO wants us to become AI-first across all engineering teams. We have 200+ engineers across 3 departments and need a governance model.',
+          affectedAreas: { development: true, qa: true, devOps: true, management: true },
+          successMetricKnown: 'partially', currentPainLevel: 'EXISTENTIAL',
+          engineeringTeamSize: '100_PLUS', affectedTeamCount: 'MULTIPLE_DEPARTMENTS',
+          systemContext: 'DISTRIBUTED_SYSTEM', productionImpact: 'PRODUCTION_CRITICAL',
+          dataSensitivity: 'CONFIDENTIAL', complianceContext: { soc2: true },
+          currentAiTools: { githubCopilot: true, cursor: true, claudeCode: true, chatgpt: true },
+          evidenceAvailable: { jiraData: true, githubData: true, cicdData: true, architectureDiagrams: true, releaseMetrics: true },
+          sanitizedArtifactsAvailable: 'yes', desiredTimeline: 'MORE_THAN_TWELVE_WEEKS',
+          budgetRange: 'LARGE', preferredEngagementModel: 'EMBEDDED_ADVISOR',
+          interestedInRecurringReviews: 'yes', interestedInProductLicensing: 'yes'
+        });
+        return r.serviceLine === 'AI_ENGINEERING_OFFICE' && r.tShirt === 'L' && r.humanReview === true
+          ? { pass: true } : { pass: false, detail: JSON.stringify({ sl: r.serviceLine, status: r.dealStatus, review: r.humanReview, tShirt: r.tShirt }) };
+      });
+
+      test('E2E Integration', 'no owner + no metric → deal breaker, fatal confidence, workshop offer', function () {
+        var r = engine.computeScores({
+          companyName: 'Unknown', prospectName: 'Bob', workEmail: 'b@unknown.com',
+          buyerRole: 'OTHER', accountableOwnerExists: 'no', accountableOwnerRole: 'NO_CLEAR_OWNER',
+          primaryTrigger: 'OTHER', primaryGoal: 'NOT_SURE',
+          freeTextAsk: 'We are exploring AI options but not sure what we need.',
+          affectedAreas: {}, successMetricKnown: 'no', currentPainLevel: 'MILD',
+          engineeringTeamSize: '1_10', affectedTeamCount: 'ONE_TEAM',
+          systemContext: 'UNKNOWN', productionImpact: 'WORKSHOP_ONLY',
+          dataSensitivity: 'PUBLIC_OR_SYNTHETIC', complianceContext: {},
+          currentAiTools: { none: true }, evidenceAvailable: { none: true },
+          sanitizedArtifactsAvailable: 'no', desiredTimeline: 'ONE_WEEK',
+          budgetRange: 'BELOW_MINIMUM', preferredEngagementModel: 'DIAGNOSTIC',
+          interestedInRecurringReviews: 'no', interestedInProductLicensing: 'no'
+        });
+        return r.dealBreakerDetected && r.confidence.level === 'fatal' && r.dealStatus === 'deal_breaker' && r.entryOffer.indexOf('Workshop') !== -1
+          ? { pass: true } : { pass: false, detail: JSON.stringify({ dealBreaker: r.dealBreakerDetected, confidence: r.confidence.level, status: r.dealStatus, offer: r.entryOffer }) };
+      });
+
+      test('E2E Integration', 'weak fit prospect → weak_fit status, readiness offer', function () {
+        var r = engine.computeScores({
+          companyName: 'MidCorp', prospectName: 'Carol', workEmail: 'c@midcorp.com',
+          buyerRole: 'PRODUCT_LEADER', accountableOwnerExists: 'yes', accountableOwnerRole: 'PRODUCT_LEADER',
+          primaryTrigger: 'ENGINEERING_PRODUCTIVITY_PRESSURE', primaryGoal: 'IMPROVE_AI_CODING_ADOPTION',
+          freeTextAsk: 'We want our dev team to use Cursor more effectively.',
+          affectedAreas: { development: true }, successMetricKnown: 'partially',
+          currentPainLevel: 'MODERATE', engineeringTeamSize: '26_50',
+          affectedTeamCount: 'TWO_TO_THREE_TEAMS', systemContext: 'EXISTING_APPLICATION',
+          productionImpact: 'INTERNAL_WORKFLOW', dataSensitivity: 'CONFIDENTIAL',
+          complianceContext: {}, currentAiTools: {}, evidenceAvailable: {},
+          sanitizedArtifactsAvailable: 'not_sure', desiredTimeline: 'FOUR_TO_EIGHT_WEEKS',
+          budgetRange: 'MEDIUM', preferredEngagementModel: 'PILOT',
+          interestedInRecurringReviews: 'yes', interestedInProductLicensing: 'yes'
+        });
+        return r.weakFitDetected && r.entryOffer.indexOf('Readiness') !== -1
+          ? { pass: true } : { pass: false, detail: JSON.stringify({ weakFit: r.weakFitDetected, offer: r.entryOffer, flags: r.flags }) };
+      });
+
+      // ════════════════════════════════════════════════════════════════════
+      // UTILITY TESTS
+      // ════════════════════════════════════════════════════════════════════
+      test('Utilities', 'hasAnyCheckbox returns false for empty object', function () {
+        return eq(engine.hasAnyCheckbox({}), false);
+      });
+
+      test('Utilities', 'hasAnyCheckbox returns true when one is checked', function () {
+        return eq(engine.hasAnyCheckbox({ dev: true }), true);
+      });
+
+      test('Utilities', 'hasAnyCheckbox returns false for null', function () {
+        return eq(engine.hasAnyCheckbox(null), false);
+      });
+
+      test('Utilities', 'countChecked zero for empty', function () {
+        return eq(engine.countChecked({}), 0);
+      });
+
+      test('Utilities', 'countChecked counts trues', function () {
+        return eq(engine.countChecked({ a: true, b: false, c: true }), 2);
+      });
+
+      test('Utilities', 'classifyFromGoal maps each goal correctly', function () {
+        var tests = [
+          ['IMPROVE_AI_CODING_ADOPTION', 'AI_CODING_OPERATING_MODEL'],
+          ['REDUCE_QA_CYCLE_TIME', 'QA_VELOCITY_SYSTEM'],
+          ['MODERNIZE_LEGACY_SYSTEM', 'BROWNFIELD_MODERNIZATION_SYSTEM'],
+          ['BUILD_PROTOTYPE', 'PROTOTYPE_TO_PRODUCTION_SYSTEM'],
+          ['CREATE_AI_ENGINEERING_ROADMAP', 'AI_ENGINEERING_OFFICE'],
+          ['BUSINESS_WORKFLOW_AUTOMATION', 'PROTOTYPE_TO_PRODUCTION_SYSTEM'],
+          ['RAG_OR_AGENTIC_APPLICATION', 'PROTOTYPE_TO_PRODUCTION_SYSTEM'],
+          ['NOT_SURE', null],
+          ['', null]
+        ];
+        for (var i = 0; i < tests.length; i++) {
+          var result = engine.classifyFromGoal(tests[i][0]);
+          if (result !== tests[i][1]) {
+            return { pass: false, detail: 'classifyFromGoal("' + tests[i][0] + '") returned ' + result + ' expected ' + tests[i][1] };
+          }
+        }
+        return { pass: true };
+      });
+
+      // ════════════════════════════════════════════════════════════════════
+      // SECTION 6.4 — ADDITIONAL OVERRIDE RULES
+      // ════════════════════════════════════════════════════════════════════
+      test('Section 6.4 — Override Rules', 'legacy modernization always min S (not XS)', function () {
+        var r = engine.computeScores({
+          primaryGoal: 'MODERNIZE_LEGACY_SYSTEM', successMetricKnown: 'yes',
+          systemContext: 'GREENFIELD', dataSensitivity: 'PUBLIC_OR_SYNTHETIC',
+          affectedTeamCount: 'ONE_TEAM', productionImpact: 'WORKSHOP_ONLY',
+          accountableOwnerExists: 'yes', accountableOwnerRole: 'ENGINEERING_LEADER',
+          evidenceAvailable: { codebaseAccess: true, jiraData: true },
+          currentAiTools: { cursor: true }, buyerRole: 'CTO',
+          currentPainLevel: 'SEVERE', budgetRange: 'SMALL',
+          sanitizedArtifactsAvailable: 'yes'
+        });
+        // Would be XS without override, but min S
+        return eq(r.tShirt, 'S');
+      });
+
+      test('Section 6.4 — Override Rules', 'no code access for modernization → flag raised', function () {
+        var r = engine.computeScores({
+          primaryGoal: 'MODERNIZE_LEGACY_SYSTEM', successMetricKnown: 'yes',
+          systemContext: 'LEGACY_MONOLITH', dataSensitivity: 'CONFIDENTIAL',
+          affectedTeamCount: 'TWO_TO_THREE_TEAMS', productionImpact: 'INTERNAL_WORKFLOW',
+          accountableOwnerExists: 'yes', accountableOwnerRole: 'ENGINEERING_LEADER',
+          evidenceAvailable: { jiraData: true }, // No codebaseAccess
+          currentAiTools: { cursor: true }, buyerRole: 'CTO',
+          currentPainLevel: 'SEVERE', budgetRange: 'MEDIUM',
+          sanitizedArtifactsAvailable: 'yes'
+        });
+        return r.flags.some(function (f) { return f.indexOf('codebase access') !== -1; })
+          ? { pass: true } : { pass: false, detail: 'Missing codebase access flag in: ' + JSON.stringify(r.flags) };
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

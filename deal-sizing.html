@@ -669,6 +669,20 @@
               <div class="deal-tshirt-details" id="resultDuration">—</div>
             </div>
 
+            <!-- Deal Status -->
+            <div class="deal-result-card deal-result-card--status deal-result-card--qualified" id="resultDealStatusCard">
+              <h3 class="deal-result-label">Deal Status</h3>
+              <div style="font-size:1.1rem;font-weight:700;margin-bottom:4px;" id="resultDealStatus">—</div>
+              <p style="color:var(--text-soft);font-size:0.85rem;margin:0;" id="resultDealStatusDesc">—</p>
+            </div>
+
+            <!-- Confidence -->
+            <div class="deal-result-card deal-result-card--confidence deal-result-card--conf-medium" id="resultConfidenceCard">
+              <h3 class="deal-result-label">Confidence Level</h3>
+              <div style="font-size:1.1rem;font-weight:700;margin-bottom:4px;" id="resultConfidence">—</div>
+              <p style="color:var(--text-soft);font-size:0.85rem;margin:0;" id="resultConfidenceDesc">—</p>
+            </div>
+
             <!-- Service Line -->
             <div class="deal-result-card deal-result-card--line">
               <h3 class="deal-result-label">Detected Service Line</h3>
@@ -694,10 +708,23 @@
               <p class="deal-path-text" id="resultNinetyDayPath">—</p>
             </div>
 
+            <!-- Risk Factors -->
+            <div class="deal-result-card deal-result-card--risk">
+              <h3 class="deal-result-label">Risk Factors</h3>
+              <div style="font-size:0.82rem;color:var(--cyan);margin-bottom:8px;" id="resultRiskMultiplier">—</div>
+              <div id="resultRiskFactors">None detected</div>
+            </div>
+
             <!-- Risk / Disqualification Flags -->
             <div class="deal-result-card deal-result-card--flags">
-              <h3 class="deal-result-label">Risk &amp; Disqualification Flags</h3>
+              <h3 class="deal-result-label">Flags &amp; Disqualification</h3>
               <div id="resultFlags">None detected</div>
+            </div>
+
+            <!-- Next Questions -->
+            <div class="deal-result-card deal-result-card--questions">
+              <h3 class="deal-result-label">Recommended Discovery Questions</h3>
+              <div id="resultNextQuestions">—</div>
             </div>
 
             <!-- Human Review -->

@@ -1367,6 +1367,58 @@
   border-radius: var(--r);
 }
 
+/* ─── Processing Overlay ──────────────────────────────────────────────── */
+.deal-processing { margin-top: 60px; }
+.deal-processing-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 36px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.deal-processing-header { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 28px; }
+.deal-processing-header .deal-step-num {
+  background: linear-gradient(135deg, var(--primary), var(--cyan));
+  color: #fff; font-size: 0.85rem;
+}
+.deal-processing-header h2 { margin: 0 0 4px; font-size: 1.25rem; }
+.deal-processing-header p  { margin: 0; }
+.deal-processing-progress {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 28px;
+}
+.deal-processing-bar-track {
+  flex: 1; height: 6px;
+  background: var(--surface-3);
+  border-radius: 100px; overflow: hidden;
+}
+.deal-processing-bar-fill {
+  height: 100%; width: 0%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--primary), var(--cyan));
+  transition: width 0.5s var(--ease-out);
+}
+.deal-processing-percent {
+  font-family: var(--mono);
+  font-size: 0.85rem; color: var(--text-soft);
+  min-width: 3.2em; text-align: right;
+}
+.deal-processing-steps { display: flex; flex-direction: column; gap: 10px; }
+.deal-processing-step {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.92rem; color: var(--text-muted);
+  transition: color 0.35s;
+}
+.deal-processing-step .dps-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; font-size: 0.85rem; flex-shrink: 0;
+}
+.deal-processing-step.active    { color: var(--cyan); }
+.deal-processing-step.active .dps-icon    { color: var(--cyan); }
+.deal-processing-step.done      { color: var(--green); }
+.deal-processing-step.done .dps-icon      { color: var(--green); content: '✓'; }
+
 /* ─── Results ──────────────────────────────────────────────────────────── */
 .deal-results { margin-top: 60px; }
 .deal-results-grid {

@@ -272,8 +272,8 @@ test('S6: Form submission renders results panel', async ({ page }) => {
     if (btn) btn.click();
   });
 
-  // Wait for results panel
-  await page.waitForSelector('#dealResults', { state: 'attached', timeout: 5000 });
+  // Wait for processing animation to complete and results panel to show
+  await page.waitForSelector('#dealResults:not([hidden])', { state: 'attached', timeout: 10000 });
 
   // Verify result elements render
   const tShirt = await page.textContent('#resultTShirt');

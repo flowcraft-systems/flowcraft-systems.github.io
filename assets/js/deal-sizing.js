@@ -459,7 +459,7 @@
     if (val) val.textContent = score;
   }
 
-  /* ─── Zoho CRM Submission ────────────────────────────────────────────── */
+  /* ─── Zoho CRM Submission (fire-and-forget via fetch) ───────────────── */
   function submitToZoho(data, scores) {
     var zohoForm = document.getElementById('dealWebformZoho');
     if (!zohoForm) return;
@@ -480,11 +480,82 @@
         disqualificationIssues: scores.disqualificationIssues, weakFitDetected: scores.weakFitDetected, dealBreakerDetected: scores.dealBreakerDetected
       }
     };
+
+    // Populate hidden Zoho form fields
     document.getElementById('deal_Last_Name').value = data.prospectName || '';
     document.getElementById('deal_Company').value = data.companyName || '';
     document.getElementById('deal_Email').value = data.workEmail || '';
     document.getElementById('deal_Description').value = JSON.stringify(payload, null, 2);
-    zohoForm.submit();
+
+    // Use fetch with no-cors + keepalive to avoid page navigation on Zoho's redirect
+    var fd = new FormData(zohoForm);
+    fetch(zohoForm.action, {
+      method: 'POST',
+      body: fd,
+      mode: 'no-cors',
+      keepalive: true
+    }).catch(function () {
+      // Fire-and-forget: Zoho web-to-lead doesn't need a response
+    });
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+     PROCESSING ANIMATION — professional "behind the scenes" effect
+     ════════════════════════════════════════════════════════════════════════ */
+  function showProcessing(onComplete) {
+    var form = document.getElementById('dealForm');
+    var results = document.getElementById('dealResults');
+    var processing = document.getElementById('dealProcessing');
+
+    // Hide form, show processing
+    form.style.display = 'none';
+    results.hidden = true;
+    processing.hidden = false;
+    processing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Reset state
+    var bar = document.getElementById('processingBar');
+    var pct = document.getElementById('processingPercent');
+    var steps = processing.querySelectorAll('.deal-processing-step');
+    bar.style.width = '0%';
+    pct.textContent = '0%';
+    steps.forEach(function (s) { s.className = 'deal-processing-step'; s.querySelector('.dps-icon').textContent = '○'; });
+
+    var stepCount = steps.length;
+    var currentIdx = -1;
+
+    // Phase durations (ms) — slightly irregular to feel organic
+    var phaseDurations = [600, 500, 700, 400, 600, 300];
+    var pauseBetween = 120;
+
+    function advanceStep() {
+      currentIdx++;
+      if (currentIdx > 0) {
+        var prev = steps[currentIdx - 1];
+        if (prev) { prev.className = 'deal-processing-step done'; prev.querySelector('.dps-icon').textContent = '✓'; }
+      }
+      if (currentIdx >= stepCount) {
+        // Animation complete
+        setTimeout(function () {
+          processing.hidden = true;
+          onComplete();
+        }, 250);
+        return;
+      }
+
+      var stepEl = steps[currentIdx];
+      stepEl.className = 'deal-processing-step active';
+      stepEl.querySelector('.dps-icon').textContent = '◉';
+
+      var pctDone = Math.round(((currentIdx + 1) / stepCount) * 100);
+      bar.style.width = pctDone + '%';
+      pct.textContent = pctDone + '%';
+
+      setTimeout(advanceStep, phaseDurations[currentIdx] + pauseBetween);
+    }
+
+    // Small initial delay to feel like "loading"
+    setTimeout(advanceStep, 400);
   }
 
   /* ─── Handle Form Submission ─────────────────────────────────────────── */
@@ -500,8 +571,10 @@
         human_review_required: scores.humanReview
       });
     }
-    renderResults(scores);
-    submitToZoho(data, scores);
+    showProcessing(function () {
+      renderResults(scores);
+      submitToZoho(data, scores);
+    });
   }
 
   /* ─── INIT helpers ───────────────────────────────────────────────────── */

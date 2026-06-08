@@ -615,6 +615,33 @@
 
         </form>
 
+        <!-- ── PROCESSING OVERLAY ── -->
+        <div id="dealProcessing" class="deal-processing" hidden>
+          <div class="deal-processing-card">
+            <div class="deal-processing-header">
+              <span class="deal-step-num">⟳</span>
+              <div>
+                <h2>Analyzing Your Inputs</h2>
+                <p class="deal-step-desc">Running through our deal-sizing models — this will only take a moment.</p>
+              </div>
+            </div>
+            <div class="deal-processing-progress">
+              <div class="deal-processing-bar-track">
+                <div class="deal-processing-bar-fill" id="processingBar"></div>
+              </div>
+              <span class="deal-processing-percent" id="processingPercent">0%</span>
+            </div>
+            <div class="deal-processing-steps" id="processingSteps">
+              <div class="deal-processing-step" data-step="0"><span class="dps-icon">○</span> Analyzing engineering context &amp; team structure</div>
+              <div class="deal-processing-step" data-step="1"><span class="dps-icon">○</span> Cross-referencing complexity dimensions</div>
+              <div class="deal-processing-step" data-step="2"><span class="dps-icon">○</span> Calibrating risk &amp; compliance multipliers</div>
+              <div class="deal-processing-step" data-step="3"><span class="dps-icon">○</span> Computing deal archetype &amp; t-shirt size</div>
+              <div class="deal-processing-step" data-step="4"><span class="dps-icon">○</span> Generating indicative pricing band</div>
+              <div class="deal-processing-step" data-step="5"><span class="dps-icon">○</span> Finalizing assessment report</div>
+            </div>
+          </div>
+        </div>
+
         <!-- ── RESULTS PANEL ── -->
         <div id="dealResults" class="deal-results" hidden>
           <div class="deal-step-header">

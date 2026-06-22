@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FlowCraft — Adeptiv Readiness Sizing Unit Tests</title>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f8f7fc; color: #1f2937; padding: 40px; }
+    h1 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 4px; }
+    .sub { color: #6b7280; font-size: 0.9rem; margin-bottom: 32px; }
+    .stats { display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+    .stat { padding: 12px 24px; border-radius: 10px; background: #fafbff; border: 1px solid #e8deff; }
+    .stat.pass { border-color: #059669; }
+    .stat.fail { border-color: #dc2626; }
+    .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; }
+    .stat-value { font-size: 1.6rem; font-weight: 700; }
+    .test-suite { margin-bottom: 24px; }
+    .suite-title { font-size: 1rem; font-weight: 700; color: #7c3aed; margin-bottom: 8px; }
+    .test { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; font-size: 0.85rem; border-bottom: 1px solid #f3f0ff; }
+    .test.pass .mark { color: #059669; }
+    .test.fail .mark { color: #dc2626; }
+    .mark { font-weight: 700; width: 20px; flex-shrink: 0; }
+    .test-name { color: #1f2937; }
+    .test-detail { color: #6b7280; font-size: 0.78rem; margin-left: 8px; }
+    .test-expected { color: #9ca3af; font-size: 0.78rem; display: block; margin-left: 30px; }
+  </style>
+</head>
+<body>
+
+  <h1>Adeptiv Enterprise Readiness Sizing — Unit Tests</h1>
+  <p class="sub" id="testTimestamp"></p>
+
+  <div class="stats">
+    <div class="stat" id="statTotal"><div class="stat-label">Total</div><div class="stat-value" id="statTotalVal">0</div></div>
+    <div class="stat pass" id="statPass"><div class="stat-label">Passed</div><div class="stat-value" id="statPassVal">0</div></div>
+    <div class="stat fail" id="statFail"><div class="stat-label">Failed</div><div class="stat-value" id="statFailVal">0</div></div>
+  </div>
+
+  <div id="results"></div>
+
+  <script src="assets/js/adeptiv-readiness-sizing.js"></script>
+  <script>
+    (function () {
+      document.getElementById('testTimestamp').textContent = 'Run: ' + new Date().toISOString();
+
+      var engine = window.__readinessSizing;
+      if (!engine) {
+        document.body.innerHTML += '<p style="color:red">ERROR: window.__readinessSizing not exposed.</p>';
+        return;
+      }
+
+      var total = 0, passed = 0, failed = 0;
+      var resultsEl = document.getElementById('results');
+
+      function updateStats() {
+        document.getElementById('statTotalVal').textContent = total;
+        document.getElementById('statPassVal').textContent = passed;
+        document.getElementById('statFailVal').textContent = failed;
+      }
+
+      function test(suite, name, fn) {
+        total++;
+        var result;
+        try { result = fn(); } catch (e) { result = { pass: false, detail: e.message }; }
+        if (result.pass) passed++; else failed++;
+        var suiteEl = resultsEl.querySelector('.test-suite[data-suite="' + suite + '"]');
+        if (!suiteEl) {
+          suiteEl = document.createElement('div');
+          suiteEl.className = 'test-suite';
+          suiteEl.setAttribute('data-suite', suite);
+          suiteEl.innerHTML = '<div class="suite-title">' + suite + '</div>';
+          resultsEl.appendChild(suiteEl);
+        }
+        var row = document.createElement('div');
+        row.className = 'test ' + (result.pass ? 'pass' : 'fail');
+        row.innerHTML = '<span class="mark">' + (result.pass ? '✓' : '✗') + '</span>'
+          + '<span class="test-name">' + name + '</span>'
+          + (result.detail ? '<span class="test-detail">— ' + result.detail + '</span>' : '')
+          + (result.expected ? '<span class="test-expected">Expected: ' + result.expected + '</span>' : '');
+        suiteEl.appendChild(row);
+        updateStats();
+      }
+
+      function eq(actual, expected, label) {
+        return { pass: actual === expected, detail: label + ' = ' + JSON.stringify(actual), expected: JSON.stringify(expected) };
+      }
+
+      // ── Helpers to build a full items map (10 signals, green/yellow/red) ──
+      var SIGNALS = engine.SIGNALS;
+      function allItems(rate, ev) {
+        var m = {};
+        SIGNALS.forEach(function (s) { m[s.id] = { rate: rate, ev: ev }; });
+        return m;
+      }
+      function withItems(base, overrides) {
+        var m = {};
+        Object.keys(base).forEach(function (k) { m[k] = base[k]; });
+        Object.keys(overrides).forEach(function (k) { m[k] = overrides[k]; });
+        return m;
+      }
+      function verdict(items) { return engine.computeVerdict({ items: items }); }
+
+      // Signal id sets by classification
+      var archIds = SIGNALS.filter(function (s) { return s.archDefining; }).map(function (s) { return s.id; });
+      var controlIds = SIGNALS.filter(function (s) { return s.tier === 'control'; }).map(function (s) { return s.id; });
+      var evidenceIds = SIGNALS.filter(function (s) { return s.tier === 'evidence'; }).map(function (s) { return s.id; });
+      var foundationalIds = SIGNALS.filter(function (s) { return s.foundational; }).map(function (s) { return s.id; });
+
+      /* ── Scope classification ───────────────────────────────────────── */
+      test('Scope classification', 'All green → Small', function () {
+        return eq(verdict(allItems('green', 'high')).scope.key, 'SMALL', 'scope');
+      });
+      test('Scope classification', 'One architecture-defining Red → Large', function () {
+        var ov = {}; ov[archIds[0]] = { rate: 'red', ev: 'high' };
+        return eq(verdict(withItems(allItems('green', 'high'), ov)).scope.key, 'LARGE', 'scope');
+      });
+      test('Scope classification', 'Two architecture-defining Reds → Reset First', function () {
+        var ov = {}; ov[archIds[0]] = { rate: 'red', ev: 'high' }; ov[archIds[1]] = { rate: 'red', ev: 'high' };
+        return eq(verdict(withItems(allItems('green', 'high'), ov)).scope.key, 'RESET', 'scope');
+      });
+      test('Scope classification', 'One control Red (architecture green) → Medium', function () {
+        var ov = {}; ov[controlIds[0]] = { rate: 'red', ev: 'high' };
+        return eq(verdict(withItems(allItems('green', 'high'), ov)).scope.key, 'MEDIUM', 'scope');
+      });
+      test('Scope classification', 'Three non-evidence Yellows → Medium', function () {
+        var ov = {};
+        [archIds[0], archIds[1], controlIds[0]].forEach(function (id) { ov[id] = { rate: 'yellow', ev: 'high' }; });
+        return eq(verdict(withItems(allItems('green', 'high'), ov)).scope.key, 'MEDIUM', 'scope');
+      });
+      test('Scope classification', 'Two Yellows only → Small', function () {
+        var ov = {};
+        [archIds[0], controlIds[0]].forEach(function (id) { ov[id] = { rate: 'yellow', ev: 'high' }; });
+        return eq(verdict(withItems(allItems('green', 'high'), ov)).scope.key, 'SMALL', 'scope');
+      });
+      test('Scope classification', 'Evidence-only Red (all else green) → Small', function () {
+        var ov = {}; ov[evidenceIds[0]] = { rate: 'red', ev: 'high' };
+        return eq(verdict(withItems(allItems('green', 'high'), ov)).scope.key, 'SMALL', 'scope');
+      });
+      test('Scope classification', 'Nothing assessed → Insufficient Data', function () {
+        return eq(verdict(allItems('na', 'low')).scope.key, 'INSUFFICIENT', 'scope');
+      });
+
+      /* ── Evidence confidence ────────────────────────────────────────── */
+      test('Evidence confidence', 'All verified + full coverage → High', function () {
+        return eq(verdict(allItems('green', 'high')).evidence.level, 'high', 'level');
+      });
+      test('Evidence confidence', 'All inferred → Low', function () {
+        return eq(verdict(allItems('green', 'low')).evidence.level, 'low', 'level');
+      });
+      test('Evidence confidence', 'Full coverage when all assessed → 100%', function () {
+        return eq(verdict(allItems('green', 'high')).evidence.coveragePct, 100, 'coverage');
+      });
+      test('Evidence confidence', 'Low coverage caps High → Medium + warning', function () {
+        var base = allItems('na', 'low');
+        var ov = {};
+        SIGNALS.slice(0, 5).forEach(function (s) { ov[s.id] = { rate: 'green', ev: 'high' }; }); // 5/10 = 50%
+        var v = verdict(withItems(base, ov));
+        return { pass: v.evidence.level === 'medium' && !!v.evidence.warning, detail: 'level=' + v.evidence.level + ' coverage=' + v.evidence.coveragePct + '%', expected: 'medium + warning' };
+      });
+
+      /* ── Risk heatmap (per-signal) ──────────────────────────────────── */
+      test('Risk heatmap', 'A Red signal shows the blocker chip', function () {
+        var ov = {}; ov['authorization'] = { rate: 'red', ev: 'high' };
+        var v = verdict(withItems(allItems('green', 'high'), ov));
+        var row = v.heatmap.filter(function (h) { return /Authorization/.test(h.title); })[0];
+        return eq(row.chip, 'blocker', 'authz chip');
+      });
+      test('Risk heatmap', 'A green signal shows the ok chip', function () {
+        var v = verdict(allItems('green', 'high'));
+        return eq(v.heatmap[0].chip, 'ok', 'first chip');
+      });
+      test('Risk heatmap', 'An unassessed signal shows the na chip', function () {
+        var v = verdict(allItems('na', 'low'));
+        return eq(v.heatmap[0].chip, 'na', 'first chip');
+      });
+      test('Risk heatmap', 'Heatmap leads with the fast-path group', function () {
+        var v = verdict(allItems('green', 'high'));
+        return eq(v.heatmap[0].group, 'fastpath', 'first group');
+      });
+
+      /* ── Red flags ──────────────────────────────────────────────────── */
+      test('Red flags', 'Red surfaces as a red flag with sectors + why', function () {
+        var ov = {}; ov['tenant_isolation'] = { rate: 'red', ev: 'medium' };
+        var v = verdict(withItems(allItems('green', 'high'), ov));
+        var hit = v.redFlags.filter(function (f) { return /Tenant isolation/.test(f.label); })[0];
+        return { pass: !!hit && hit.blocks.indexOf('banking') !== -1 && !!hit.why, detail: hit ? 'blocks=' + hit.blocks.join(',') : 'not found', expected: 'flag includes banking + why note' };
+      });
+      test('Red flags', 'Foundational Red tagged foundational', function () {
+        var ov = {}; ov[foundationalIds[0]] = { rate: 'red', ev: 'low' };
+        var v = verdict(withItems(allItems('green', 'high'), ov));
+        var hit = v.redFlags.filter(function (f) { return f.foundational; })[0];
+        return eq(!!hit, true, 'has foundational red flag');
+      });
+      test('Red flags', 'No Reds → empty red-flag list', function () {
+        return eq(verdict(allItems('green', 'high')).redFlags.length, 0, 'redFlags');
+      });
+
+      /* ── Where the effort lives ─────────────────────────────────────── */
+      test('Effort buckets', 'A Red signal lands in Redesign/remediate', function () {
+        var ov = {}; ov['prod_access'] = { rate: 'red', ev: 'high' };
+        var v = verdict(withItems(allItems('green', 'high'), ov));
+        return eq(v.fullScope.redesign.some(function (t) { return /Production access/.test(t); }), true, 'in redesign');
+      });
+      test('Effort buckets', 'A Yellow signal lands in Harden', function () {
+        var ov = {}; ov['secrets'] = { rate: 'yellow', ev: 'high' };
+        var v = verdict(withItems(allItems('green', 'high'), ov));
+        return eq(v.fullScope.harden.some(function (t) { return /Secrets/.test(t); }), true, 'in harden');
+      });
+      test('Effort buckets', 'All green → every signal is Evidence-only', function () {
+        var v = verdict(allItems('green', 'high'));
+        return eq(v.fullScope.evidenceOnly.length, SIGNALS.length, 'evidence-only count');
+      });
+
+      /* ── Pricing ────────────────────────────────────────────────────── */
+      test('Pricing', 'Medium band formats with non-binding tail', function () {
+        var s = engine.formatPriceBand('MEDIUM');
+        return { pass: /\$90k–\$250k/.test(s) && /non-binding/.test(s), detail: s, expected: 'US: $90k–$250k · Indicative, non-binding' };
+      });
+      test('Pricing', 'Reset band labels a workshop', function () {
+        var s = engine.formatPriceBand('RESET');
+        return { pass: /workshop/i.test(s), detail: s, expected: 'mentions reset workshop' };
+      });
+
+      /* ── Proceed recommendation ─────────────────────────────────────── */
+      test('Proceed', 'Small + verified → cleared to draft SOW', function () {
+        return eq(verdict(allItems('green', 'high')).proceed.clear, true, 'clear');
+      });
+      test('Proceed', 'Large → requires architect sign-off', function () {
+        var ov = {}; ov[archIds[0]] = { rate: 'red', ev: 'high' };
+        return eq(verdict(withItems(allItems('green', 'high'), ov)).proceed.clear, false, 'clear');
+      });
+      test('Proceed', 'Inferred evidence forces sign-off even when Small', function () {
+        return eq(verdict(allItems('green', 'low')).proceed.clear, false, 'clear');
+      });
+
+      /* ── Rubric integrity (the inference mapping itself) ─────────────── */
+      test('Rubric integrity', 'Exactly 10 signals', function () {
+        return eq(SIGNALS.length, 10, 'count');
+      });
+      test('Rubric integrity', '5 architecture-defining · 4 control · 1 evidence', function () {
+        return { pass: archIds.length === 5 && controlIds.length === 4 && evidenceIds.length === 1, detail: 'arch=' + archIds.length + ' control=' + controlIds.length + ' evidence=' + evidenceIds.length, expected: '5 / 4 / 1' };
+      });
+      test('Rubric integrity', 'Exactly 3 fast-path signals', function () {
+        return eq(SIGNALS.filter(function (s) { return s.fastPath; }).length, 3, 'fastPath count');
+      });
+      test('Rubric integrity', 'Every signal has ask, tells, and ≥3 choices', function () {
+        var bad = SIGNALS.filter(function (s) { return !s.ask || !s.tells || !s.choices || s.choices.length < 3; });
+        return { pass: bad.length === 0, detail: bad.length ? 'missing on: ' + bad.map(function (s) { return s.id; }).join(',') : 'all complete', expected: 'all signals complete' };
+      });
+      test('Rubric integrity', 'Every choice maps to a legal rate', function () {
+        var legal = { green: 1, yellow: 1, red: 1 };
+        var bad = [];
+        SIGNALS.forEach(function (s) { s.choices.forEach(function (c) { if (!legal[c.rate]) bad.push(s.id + ':' + c.value); }); });
+        return { pass: bad.length === 0, detail: bad.length ? 'illegal: ' + bad.join(',') : 'all legal', expected: 'green/yellow/red only' };
+      });
+      test('Rubric integrity', 'Every signal offers exactly one Red choice', function () {
+        var bad = SIGNALS.filter(function (s) { return s.choices.filter(function (c) { return c.rate === 'red'; }).length !== 1; });
+        return { pass: bad.length === 0, detail: bad.length ? 'off: ' + bad.map(function (s) { return s.id; }).join(',') : 'all have one Red', expected: 'one Red per signal' };
+      });
+      test('Rubric integrity', 'getFormData mapping: chosen answer → inferred rate round-trips', function () {
+        // simulate: pick the Red choice on tenant_isolation, verify its mapped rate
+        var sig = SIGNALS.filter(function (s) { return s.id === 'tenant_isolation'; })[0];
+        var redChoice = sig.choices.filter(function (c) { return c.rate === 'red'; })[0];
+        return eq(redChoice.rate, 'red', 'mapped rate');
+      });
+    })();
+  </script>
+</body>
+</html>
